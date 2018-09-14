@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>::SignUp::</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+
+
+
+      	<link rel="icon" type="image/png" href="{{url_for('static',filename='images/icons/1.ico')}}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/animate/animate.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/css-hamburgers/hamburgers.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/animsition/css/animsition.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/select2/select2.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/daterangepicker/daterangepicker.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/main.css')}}">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Custom fonts for this template -->
+    <link href="https://fonts.googleapis.com/css?family=Catamaran:100,200,300,400,500,600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+      <link rel="icon" type="image/png" href="{{url_for('static',filename='images/icons/1.ico')}}"/>
+
+    <!-- Custom styles for this template -->
+    <link href="{{url_for('static',filename='css/one-page-wonder.min.css')}}" rel="stylesheet">
+      <style>
+
+            .vl {
+    border-left: 6px solid green;
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    margin-left: -3px;
+    top: 0;
+}
+                .v2 {
+    border-left: 6px solid green;
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    margin-left: -3px;
+    top: 0;
+}
+                        .v3 {
+    border-left: 6px solid green;
+    height: 100%;
+    position: absolute;
+    left: 85%;
+    margin-left: -3px;
+    top: 0;
+}
+                                  .v4 {
+    border-left: 6px solid green;
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    margin-left: -3px;
+    top: 0;
+}
+
+
+      </style>
+
+  </head>
+
+  <body>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom fixed-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">Hash’s Pet care </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+              <li class="nav-item">
+              <a class="nav-link" href="/service/">Service</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="/aboutus/">About Us</a>
+            </li>
+              <li class="nav-item">
+              <a class="nav-link" href="/contact/">Contact Us</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="/register/">Sign Up</a>
+            </li>
+            <li class="nav-item ">
+              <a class="nav-link" href="/login/">Log In</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+
+    <header class="masthead text-center text-white">
+      <div class="masthead-content">
+        <div class="container">
+          <h1 class="masthead-heading mb-0">Welcome <br> to </h1>
+
+            <div class="row">
+             <div class="col-sm-10">
+                 <img src="{{url_for('static',filename='images/logo.png')}}" width="1200px">
+
+             </div>
+
+            </div>
+<p style="color: black">Create your User Account for access Hash's pet care Special features..!</p>
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-info alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{ message }}
+                    </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+        </div>
+      </div>
+      <div class="bg-circle-1 bg-circle"></div>
+      <div class="bg-circle-2 bg-circle"></div>
+      <div class="bg-circle-3 bg-circle"></div>
+      <div class="bg-circle-4 bg-circle"></div>
+    </header>
+
+    <section>
+
+      <div class="container">
+
+        <div class="row align-items-center">
+          <div class="col-lg-6 order-lg-2">
+
+          </div>
+          <div class="col-lg-6 order-lg-1">
+            <div class="p-5">
+           <div class="container-login100">
+			<div class="wrap-login100">
+				<form class="login100-form validate-form p-l-55 p-r-55 p-t-178" action="/regdata/" method="post" enctype="multipart/form-data">
+					<span class="login100-form-title">
+						Register User
+					</span>
+
+					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Your First Name">
+						<input class="input100" type="text" name="name" placeholder="First Name" required value="{{ request.form.name }}">
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Your Last Name">
+						<input class="input100" type="text" name="lname" placeholder="Last Name" required value="{{request.form.lname}}">
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Your Email">
+						<input class="input100" type="text" name="email" placeholder="User Email" required value="{{request.form.email}}">
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Your Birth day">
+						<input class="input100" type="text" name="dob" placeholder="Date of Birth" required value="{{request.form.dob}}">
+						<span class="focus-input100"></span>
+					</div>
+
+
+					<div class="wrap-input100 validate-input" data-validate = "Please enter password">
+						<input class="input100" type="password" name="pword" placeholder="Password" required value="{{request.form.pword}}" >
+						<span class="focus-input100"></span>
+					</div>
+    <br>
+                    <div class="wrap-input100 validate-input" data-validate = "Please Retypoe password">
+						<input class="input100" type="password" name="cpword" placeholder="Re-type Password" required value="{{request.form.cpword}}">
+						<span class="focus-input100"></span>
+					</div>
+
+					<br>
+                    <div class="wrap-input100 validate-input" data-validate = "Please Upload Image" >
+						 <input id="file-picker" type="file" name="file" accept="image/*" multiple>
+						<span class="focus-input100"></span>
+					</div>
+                    <br>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Register
+						</button>
+					</div>
+
+
+				</form>
+			</div>
+           </div>
+            </div>
+          </div>
+    <div class="col-sm-3">
+     <img src="{{url_for('static',filename='images/dog.png')}}" width="100%" height="100%">
+     </div>
+
+
+
+
+
+
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer class="py-5 " style="color: #900C3F">
+      <div class="container">
+          <hr size="5">
+        <div class="row">
+                    <div class="form-group col-md-4">
+
+
+                        <h3>Clinic Open</h3>
+                        <p style="text-align:left;size: 30px; color:black;letter-spacing: 3px"><br>
+                            • Monday 8.00Am to 10.00Pm
+                            <br>
+                            • Tuesday 8.00Am to 10.00Pm
+                            <br>
+                            • Wednesday  8.00Am to 8.00Pm
+                            <br>
+                            • Thursday 8.00Am to 10.00Pm
+                            <br>
+                            • Friday 8.00Am to 7.00Pm
+                            <br>
+                            • Saturday  8.00Am to 1.00Pm
+                        </p>
+                        <p style="text-align:left;size: 30px; color:red;letter-spacing: 5px">
+
+                            • Sunday -Closed..!
+
+                        </p>
+                        <div class="vl"></div>
+
+                    </div>
+                       <div class="form-group col-md-4">
+
+
+                        <h3>Contact Number </h3>
+                        <p style="text-align:left;size: 30px; color:black;letter-spacing: 3px"><br>
+
+                            • Tel- +94(0)412223699
+
+                            <br>
+                            • Fax- +94(0)412223699
+                            <br>
+                            • Email - Hashara1995@gmail.com
+
+                        </p>
+                        <div class="v2"></div>
+
+                    </div>
+
+                       <div class="form-group col-md-3">
+
+
+                        <h3>Address</h3>
+                        <p style="text-align:left;size: 30px; color:black;letter-spacing: 3px"><br>
+                            Dewndatagurugewatta
+                            <br>
+                            Weraduwa
+
+                            <br>
+                            Matara
+                            <br>
+                            Sri Lanka
+
+                        </p>
+                        <div class="v3"></div>
+
+                    </div>
+            <div class="form-group col-md-1">
+
+                        <br>
+                <br>
+                        <p>Free pet Clinics <br> Saturday <br> 1.00Pm to 4.00 Pm </p>
+
+
+
+                    </div>
+
+
+                </div>
+                <hr>
+      </div>
+      <!-- /.container -->
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="{{url_for('static',filename='vendor/jquery/jquery.min.js')}}"></script>
+    <script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+
+    <!--===============================================================================================-->
+	<script src="{{url_for('static',filename='vendor/jquery/jquery-3.2.1.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='vendor/animsition/js/animsition.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='vendor/bootstrap/js/popper.js')}}"></script>
+	<script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='vendor/select2/select2.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='vendor/daterangepicker/moment.min.js')}}"></script>
+	<script src="{{url_for('static',filename='vendor/daterangepicker/daterangepicker.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='vendor/countdowntime/countdowntime.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='js/main.js')}}"></script>
+
+
+
+
+
+
+
+
+  </body>
+
+</html>

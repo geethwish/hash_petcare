@@ -1,0 +1,490 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------------------------------------------------------------>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+    <title>Hash's Pet Home</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{url_for('static',filename='images/icons/1.ico')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/dash.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/animate/animate.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/css-hamburgers/hamburgers.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/animsition/css/animsition.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/select2/select2.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/daterangepicker/daterangepicker.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/regpet.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+  <!------------------------------------- date-------------------->
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='dist/material-datetime-picker.css')}}">
+
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .c-btn {
+      font-size: 14px;
+      text-transform: capitalize;
+      font-weight: 600;
+      display: inline-block;
+      line-height: 36px;
+      cursor: pointer;
+      text-align: center;
+      text-transform: uppercase;
+      min-width: 88px;
+      height: 36px;
+      margin: 10px 8px;
+      padding: 0 8px;
+      text-align: center;
+      letter-spacing: .5px;
+      border-radius: 2px;
+      background: #F1F1F1;
+      color: #393939;
+      transition: background 200ms ease-in-out;
+      box-shadow: 0 3.08696px 5.82609px 0 rgba(0, 0, 0, 0.16174), 0 3.65217px 12.91304px 0 rgba(0, 0, 0, 0.12435);
+    }
+
+    .c-btn--flat {
+      background: transparent;
+      margin: 10px 8px;
+      min-width: 52px;
+    }
+
+    .c-btn:hover {
+      background: rgba(153, 153, 153, 0.2);
+      color: #393939;
+    }
+
+    .c-btn:active {
+      box-shadow: 0 9.6087px 10.78261px 0 rgba(0, 0, 0, 0.17217), 0 13.56522px 30.3913px 0 rgba(0, 0, 0, 0.15043);
+    }
+
+    .c-btn--flat, .c-btn--flat:hover, .c-btn--flat:active {
+      box-shadow: none;
+    }
+
+  </style>
+<!----------------------------------------------------------------------->
+
+
+
+
+
+
+
+
+
+
+
+    <style>
+
+        p {
+
+}
+        h1 {
+    text-align: center;
+    text-transform: uppercase;
+    color: #4CAF50;
+}
+               h3 {
+    text-align: left;
+    text-transform: uppercase;
+    color: #8e2800;
+}
+        .vl {
+    border-left: 6px solid green;
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    margin-left: -3px;
+    top: 0;
+}
+                .v2 {
+    border-left: 6px solid green;
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    margin-left: -3px;
+    top: 0;
+}
+                        .v3 {
+    border-left: 6px solid green;
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    margin-left: -3px;
+    top: 0;
+}
+
+
+    </style>
+
+
+</head>
+
+<body>
+
+   <div class="page-wrapper chiller-theme toggled">
+        <nav id="sidebar" class="sidebar-wrapper">
+            <div class="sidebar-content">
+                <div id="toggle-sidebar">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="sidebar-brand">
+                    <a href="/dashboard/">Hash's Pet Care</a>
+                </div>
+                <div class="sidebar-header">
+                    <div class="user-pic">
+                        <img class="img-responsive img-rounded" src="{{url_for('static',filename='userpics/'+session['profic'])}}"  alt="User picture">
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">{{ session['firstname']}}
+                            <strong>{{ session['lastname']}}</strong>
+                        </span>
+                        <span class="user-role">User</span>
+                        <span class="user-status">
+                            <i class="fa fa-circle"></i>
+                            <span>Online</span>
+                        </span>
+                    </div>
+                </div>
+                <!-- sidebar-header  -->
+
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="header-menu">
+                            <span>General</span>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-registered"></i>
+                                <span>Register Pet</span>
+                                <span class="badge badge-pill badge-danger">New</span>
+                            </a>
+
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-edit"></i>
+                                <span>Update Pets Details</span>
+
+                            </a>
+
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-trash"></i>
+                                <span>Delete Pets Details</span>
+                            </a>
+
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="/view/">
+                                <i class="fa fa-eye"></i>
+                                <span>View Pet Details</span>
+                            </a>
+
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-user"></i>
+                                <span>Chnage Profile</span>
+                            </a>
+
+                        </li>
+
+                    </ul>
+                </div>
+                <!-- sidebar-menu  -->
+            </div>
+            <!-- sidebar-content  -->
+            <div class="sidebar-footer">
+
+                <a href="#">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge badge-pill badge-success notification">{{ session['messages']}}</span>
+                </a>
+
+                <a href="/logout/">
+                    <i class="fa fa-power-off"></i>
+                </a>
+            </div>
+
+        </nav>
+
+        <!-- sidebar-wrapper  -->
+        <main class="page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <div class="alert alert-info alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    {{ message }}
+                                </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endwith %}
+
+                <div class="container-login100">
+                <div class="wrap-login100">
+
+
+
+                    <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" action="/petregister/" method="post"enctype="multipart/form-data">
+					<span class="login100-form-title">
+						Register Your Pet
+					</span>
+
+					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Your Pet's Name">
+						<input class="input100" type="text" name="petname" placeholder="pet's Name" required value="{{request.form.petname}}">
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Your Pet's Type">
+						<input class="input100" type="text" name="type" placeholder="Type" required value="{{request.form.type}}">
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Your Pet's Bread">
+						<input class="input100" type="text" name="Bread" placeholder="Bread" required value="{{request.form.Bread}}">
+						<span class="focus-input100"></span>
+					</div>
+                        <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Your Pet's Fur Color">
+						<input class="input100" type="text" name="color" placeholder="Fur Color" required value="{{request.form.color}}">
+						<span class="focus-input100"></span>
+					</div>
+
+
+                    <div class="wrap-input100 validate-input m-b-16" data-validate="Please Select Pet's Gender">
+						<select id="inputState" name="gender" class="form-control input100" required value="{{request.form.gender}}">
+                            <option selected>Gender</option>
+                            <option>Male</option>
+                            <option>Female</option>
+                          </select>
+					</div>
+                    <div class="wrap-input100 validate-input m-b-16" data-validate="Please Select Pet's Age">
+                    <select id="inputState" class="form-control input100" name="age" required value="{{request.form.age}}">
+        <option selected>
+            Age</option>
+         <option >0.5</option>
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+        <option>11</option>
+        <option>12</option>
+        <option>13</option>
+        <option>14</option>
+        <option>15</option>
+        <option>16</option>
+        <option>17</option>
+        <option>18</option>
+        <option>19</option>
+        <option>20</option>
+        <option>21</option>
+        <option>22</option>
+        <option>23</option>
+        <option>24</option>
+        <option>25</option>
+        </select>
+                     </div>
+                    <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Your Birth day">
+						<input class="input100" type="text" name="dob" placeholder="DOB(Y/M/D)" required value="{{request.form.dob}}">
+						<span class="focus-input100"></span>
+					</div>
+                    
+
+
+
+
+
+					<br>
+                    <div class="wrap-input100 validate-input" data-validate = "Please Upload Image">
+						 <input type="file" name="pic" accept="image/*" multiple>
+						<span class="focus-input100"></span>
+					</div>
+                    <br>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Register
+						</button>
+					</div>
+
+
+				</form>
+                </div>
+                </div>
+
+
+
+
+
+                </div>
+                <br>
+                <hr>
+                   <div class="row">
+                    <div class="form-group col-md-4">
+
+
+                        <h3>Clinic Open</h3>
+                        <p style="text-align:left;size: 30px; color:black;letter-spacing: 3px"><br>
+                            • Monday 8.00Am to 10.00Pm
+                            <br>
+                            • Tuesday 8.00Am to 10.00Pm
+                            <br>
+                            • Wednesday  8.00Am to 8.00Pm
+                            <br>
+                            • Thursday 8.00Am to 10.00Pm
+                            <br>
+                            • Friday 8.00Am to 7.00Pm
+                            <br>
+                            • Saturday  8.00Am to 1.00Pm
+                        </p>
+                        <p style="text-align:left;size: 30px; color:red;letter-spacing: 5px">
+
+                            • Sunday -Closed..!
+
+                        </p>
+                        <div class="vl"></div>
+
+                    </div>
+                       <div class="form-group col-md-4">
+
+
+                        <h3>Appointment hours</h3>
+                        <p style="text-align:left;size: 30px; color:black;letter-spacing: 3px"><br>
+                            • Monday 8.00 Am to 11.00Am
+                            <br>
+                            • Tuesday 8.AM to 2.00 PM
+
+                            <br>
+                            • Thursday 2.00PM to 4.00 Pm
+                            <br>
+                            • Friday 1.00Pm to 6.00 Pm
+
+                        </p>
+                        <div class="v2"></div>
+
+                    </div>
+
+                       <div class="form-group col-md-4">
+
+
+                        <h3>Address</h3>
+                        <p style="text-align:left;size: 30px; color:black;letter-spacing: 3px"><br>
+                            Dewndatagurugewatta
+                            <br>
+                            Weraduwa
+
+                            <br>
+                            Matara
+                            <br>
+                            Sri Lanka
+
+                        </p>
+                        <div class="v3"></div>
+
+                    </div>
+
+                </div>
+                <hr>
+
+            </div>
+
+    </main>
+
+    <!-- page-content" -->
+    </div>
+    <!-- page-wrapper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+   <script>
+        jQuery(function ($) {
+
+    $(".sidebar-dropdown > a").click(function () {
+        $(".sidebar-submenu").slideUp(200);
+        if ($(this).parent().hasClass("active")) {
+            $(".sidebar-dropdown").removeClass("active");
+            $(this).parent().removeClass("active");
+        } else {
+            $(".sidebar-dropdown").removeClass("active");
+            $(this).next(".sidebar-submenu").slideDown(200);
+            $(this).parent().addClass("active");
+        }
+
+    });
+
+    $("#toggle-sidebar").click(function () {
+        $(".page-wrapper").toggleClass("toggled");
+    });
+
+
+});
+
+
+
+    </script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='vendor/jquery/jquery-3.2.1.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='vendor/animsition/js/animsition.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='vendor/bootstrap/js/popper.js')}}"></script>
+	<script src="{{url_for('static',filename='vendor/bootstrap/js/bootstrap.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='vendor/select2/select2.min.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='vendor/daterangepicker/moment.min.js')}}"></script>
+	<script src="{{url_for('static',filename='vendor/daterangepicker/daterangepicker.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='vendor/countdowntime/countdowntime.js')}}"></script>
+<!--===============================================================================================-->
+	<script src="{{url_for('static',filename='js/main.js')}}"></script>
+
+
+
+</body>
+
+</html>
