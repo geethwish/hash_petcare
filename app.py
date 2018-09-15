@@ -61,6 +61,7 @@ def dash():
     return render_template("dashboard.html")
 
 
+# ------------------------------------------------------register customer------------------------------------------
 @app.route('/regpet/')
 def regpet():
     return render_template("Registerpet.html")
@@ -550,6 +551,7 @@ def authpass():
     return redirect(url_for("changepw"))
     flash("Save Failled..")
 
+
 @app.route('/viewmsg/')
 def viewmsg():
     owneremail = session['uemail']
@@ -564,7 +566,169 @@ def viewmsg():
     return render_template("Viewmsg.html")
 
 
+# ----------------------------------------------------Admin Section-------------------------------------------------
 
+@app.route('/admin/')
+def admin():
+    return render_template("adminlogin.html")
+
+
+@app.route('/adloginauth/', methods=['POST'])
+def adloginauth():
+    try:
+
+        if request.method == "POST":
+            usermail = request.form['email']
+
+            firstname = request.form['fname']
+
+            lastname = request.form['lname']
+
+            usermobile = request.form['mobile']
+
+            userrole = request.form['role']
+            userpass1 = request.form['pass']
+            userpass2 = request.form['pass2']
+            print(usermail, firstname, lastname, usermobile, userrole, userpass1, userpass2)
+            if userrole == 'User Role':
+                flash("Please Select your Role here")
+
+            Truepassword = sha256_crypt.encrypt((str(userpass1)))
+
+            if userpass1 == userpass2:
+                c, cnx = connection()
+                c.execute("SELECT * FROM `admin` WHERE `email`=%s", (thawrt(usermail),))
+                rows = c.fetchone()
+                print(rows)
+
+                if rows is 0 or rows is None:
+                    # -------------------------------------------------------------- image upload
+
+                    imgfile = request.files.getlist("pic")
+                    print(imgfile)
+                    capname = now.strftime("%Y-%m-%d %H-%M")
+                    target = os.path.join(APP_ROOT, 'static/staff')
+                    print(target)
+
+                    if imgfile == []:
+                        flash("please selct a image")
+                    else:
+
+                        if not os.path.isdir(target):
+                            os.mkdir(target)
+
+                        for file in request.files.getlist("pic"):
+                            print(file)
+                            filename = file.filename
+                            print(filename)
+                            destination = "/".join([target, filename])
+                            print(destination)
+
+                            file.save(destination)
+                            newfile = 'static/staff/' + capname + filename
+                            newfilename = capname + filename
+                            os.rename(destination, newfile)
+                            #flash("Sucess")
+
+                    c.execute(
+                        "INSERT INTO `admin`( `email`, `FirstName`, `LastName`, `Role`, `Mobile`, `pic`, `password`) VALUES (%s,%s,%s,%s,%s,%s,%s)",
+                        (
+                            thawrt(usermail), thawrt(firstname), thawrt(lastname), thawrt(userrole),
+                            thawrt(usermobile), thawrt(newfilename),
+                            thawrt(Truepassword)))
+                    cnx.commit()
+                    flash("Registration successful..!")
+
+                    cnx.close
+                    c.close()
+
+                    gc.collect()
+                    session['logged'] = True
+                    session['uname'] = usermail
+                    return redirect(url_for('admindash'))
+
+                else:
+                    flash("The email already Registered,  please try another email..!")
+
+
+
+
+            else:
+                flash("Passowrd You Entered doesnt match..!")
+
+
+
+        else:
+            print("error")
+
+    except Exception as e:
+        print(e)
+    return redirect(url_for("reguser"))
+
+
+@app.route('/adminlogincheck/', methods=['POST'])
+def adminlogincheck():
+    try:
+
+        if request.method == "POST":
+
+            email = request.form['email']
+
+            c, cnx = connection()
+
+            c.execute(
+                "SELECT * FROM `admin` WHERE `email`=%s",
+                (thawrt(email),))
+
+            data = c.fetchall()
+            print(data)
+            for row in data:
+                myemail = row[1]
+                fname = row[2]
+                lname = row[3]
+                Role = row[4]
+                mobile = row[5]
+                mypic = row[6]
+                sts = row[7]
+                passw = row[8]
+                print(fname)
+
+            if sha256_crypt.verify(request.form['pass'], passw):
+                print(request.form['pass'])
+                session['logged'] = True
+                session['firstname'] = fname
+                session['lastname'] = lname
+                session['uemail'] = myemail
+                session['myrole'] = Role
+                session['mymobile'] = mobile
+                session['mypic'] = mypic
+                session['sts'] = sts
+                session['passwordmy'] = passw
+
+
+                flash("you are now Logged in...!")
+                return redirect(url_for('admindash'))
+            else:
+                flash("Invalid credential, Plz try again..!")
+                gc.collect()
+                return redirect(url_for("admin"))
+
+        return redirect(url_for("admin"))
+    except Exception as e:
+        print(e)
+        flash("Login Error..! plz contact the Hash's Pet care Center...")
+
+        return redirect(url_for("admin"))
+
+
+@app.route('/admindash/')
+def admindash():
+    return render_template("Admindashboard.html")
+
+
+@app.route('/reguser/')
+def reguser():
+    return render_template("newaccount.html")
 
 
 if __name__ == '__main__':

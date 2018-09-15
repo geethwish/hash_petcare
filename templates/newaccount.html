@@ -1,0 +1,434 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!------------------------------------------------------------>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+    <title>Hash's Pet Care:::New Account</title>
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <link rel="icon" type="image/png" href="{{url_for('static',filename='images/icons/1.ico')}}"/>
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/dash.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/animate/animate.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/css-hamburgers/hamburgers.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/animsition/css/animsition.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/select2/select2.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/daterangepicker/daterangepicker.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='admin/css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='admin/css/main2.css')}}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+  <!------------------------------------- date-------------------->
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+
+    <style>
+
+        p {
+
+}
+        h1 {
+    text-align: center;
+    text-transform: uppercase;
+    color: #4CAF50;
+}
+               h3 {
+    text-align: left;
+    text-transform: uppercase;
+    color: #8e2800;
+}
+        .vl {
+    border-left: 6px solid green;
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    margin-left: -3px;
+    top: 0;
+}
+                .v2 {
+    border-left: 6px solid green;
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    margin-left: -3px;
+    top: 0;
+}
+                        .v3 {
+    border-left: 6px solid green;
+    height: 100%;
+    position: absolute;
+    left: 100%;
+    margin-left: -3px;
+    top: 0;
+}
+
+    </style>
+
+
+</head>
+
+<body>
+
+    <div class="page-wrapper chiller-theme toggled">
+        <nav id="sidebar" class="sidebar-wrapper">
+            <div class="sidebar-content">
+                <div id="toggle-sidebar">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+                <div class="sidebar-brand">
+                    <a href="/admindash/">Hash's Pet Care</a>
+                </div>
+                <div class="sidebar-header">
+                    <div class="user-pic">
+                       <img class="img-responsive img-rounded" src=""  alt="User picture">
+                    </div>
+                    <div class="user-info">
+                        <span class="user-name">{{ session['firstname']}}
+                            <strong>{{ session['lastname']}}</strong>
+                        </span>
+                        <span class="user-role">User</span>
+                        <span class="user-status">
+                            <i class="fa fa-circle"></i>
+                            <span>Online</span>
+                        </span>
+                    </div>
+                </div>
+                <!-- sidebar-header  -->
+
+                <div class="sidebar-menu">
+                    <ul>
+                        <li class="header-menu">
+                            <span>General</span>
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="#">
+                                <i class="fa fa-registered"></i>
+                                <span>User Accounts</span>
+                                <span class="badge badge-pill badge-danger">New</span>
+                            </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="/reguser/">Create New Account
+
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/#/">Delete Accounts</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="/update/">
+                                <i class="fa fa-edit"></i>
+                                <span>Update Pets Details</span>
+
+                            </a>
+
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="/delpet/">
+                                <i class="fa fa-trash"></i>
+                                <span>Delete Pets Details</span>
+                            </a>
+
+                        </li>
+                        <li class="sidebar-dropdown">
+                            <a href="/view/">
+                                <i class="fa fa-eye"></i>
+                                <span>View Pet Details</span>
+                            </a>
+
+                        </li>
+                        <li class="sidebar-dropdown ">
+                            <a href="#">
+                                <i class="fa fa-user"></i>
+                                <span>Chnage Profile</span>
+                            </a>
+          <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="/propic/">Change Profile Pic
+                                            <span class="badge badge-pill badge-success">Img</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/changepw/">Change Password</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+          </ul>
+
+
+
+
+
+
+                    </ul>
+
+                </div>
+                <!-- sidebar-menu  -->
+            </div>
+            <!-- sidebar-content  -->
+            <div class="sidebar-footer">
+
+                <a href="/viewmsg/">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge badge-pill badge-success notification">{{ session['messages']}}</span>
+                </a>
+
+                <a href="/logout/">
+                    <i class="fa fa-power-off"></i>
+                </a>
+            </div>
+        </nav>
+
+        <!-- sidebar-wrapper  -->
+
+
+
+
+        <main class="page-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="form-group col-md-12">
+                                {% with messages = get_flashed_messages() %}
+                                    {% if messages %}
+                                        {% for message in messages %}
+                                            <div class="alert alert-info alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    {{ message }}
+                                </div>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endwith %}
+
+                    </div>
+
+                </div>
+            <h1>Create New User Account </h1>
+                <hr>
+            <div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-t-85 p-b-20">
+				<form class="login100-form validate-form" action="/adloginauth/" method="post" enctype="multipart/form-data">
+
+                    <span class="login100-form-avatar">
+						<img id="avt" src="{{url_for('static',filename='admin/images/avatar-01.jpg')}}" alt="AVATAR" >
+					</span>
+
+
+					<div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter User Email">
+						<input class="input100" type="text" name="email" required value="{{request.form.email}}">
+						<span class="focus-input100" data-placeholder="User Email"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter First Name">
+						<input class="input100" type="text" name="fname" required value="{{request.form.fname}}">
+						<span class="focus-input100" data-placeholder="First Name"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter Last Name">
+						<input class="input100" type="text" name="lname" required value="{{request.form.lname}}">
+						<span class="focus-input100" data-placeholder="Last Name"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter Mobile Number">
+						<input class="input100" type="text" name="mobile" required value="{{request.form.mobile}}">
+						<span class="focus-input100" data-placeholder="Mobile"></span>
+					</div>
+
+
+                    <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "Enter Last Name">
+
+                    <select id="inpu" name="role" class="input100" required value="{{request.form.role}}">
+                            <option selected>User Role</option>
+                            <option>Doctor</option>
+                            <option>Nurse</option>
+                          </select>
+                    </div>
+
+
+					<div class="wrap-input100 validate-input m-b-50" data-validate="Enter password">
+						<input class="input100" type="password" name="pass" required value="{{request.form.pass}}">
+						<span class="focus-input100" data-placeholder="Password"></span>
+					</div>
+                    <div class="wrap-input100 validate-input m-b-50" data-validate="Confirm Password">
+						<input class="input100" type="password" name="pass2" required value="{{request.form.pass2}}">
+						<span class="focus-input100" data-placeholder="Confrim Passwrod"></span>
+					</div>
+
+                    <div class="wrap-input100 validate-input m-t-85 m-b-35" data-validate = "User Image">
+						 <input type="file" name="pic" accept="image/gif, image/jpeg, image/png" multiple onchange="readURL(this);">
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Login
+						</button>
+					</div>
+
+
+				</form>
+			</div>
+		</div>
+	</div>
+
+                <hr>
+                   <div class="row">
+                    <div class="form-group col-md-4">
+
+
+                        <h3>Clinic Open</h3>
+                        <p style="text-align:left;size: 30px; color:black;letter-spacing: 3px"><br>
+                            • Monday 8.00Am to 10.00Pm
+                            <br>
+                            • Tuesday 8.00Am to 10.00Pm
+                            <br>
+                            • Wednesday  8.00Am to 8.00Pm
+                            <br>
+                            • Thursday 8.00Am to 10.00Pm
+                            <br>
+                            • Friday 8.00Am to 7.00Pm
+                            <br>
+                            • Saturday  8.00Am to 1.00Pm
+                        </p>
+                        <p style="text-align:left;size: 30px; color:red;letter-spacing: 5px">
+
+                            • Sunday -Closed..!
+
+                        </p>
+                        <div class="vl"></div>
+
+                    </div>
+                       <div class="form-group col-md-4">
+
+
+                        <h3>Appointment hours</h3>
+                        <p style="text-align:left;size: 30px; color:black;letter-spacing: 3px"><br>
+                            • Monday 8.00 Am to 11.00Am
+                            <br>
+                            • Tuesday 8.AM to 2.00 PM
+
+                            <br>
+                            • Thursday 2.00PM to 4.00 Pm
+                            <br>
+                            • Friday 1.00Pm to 6.00 Pm
+
+                        </p>
+                        <div class="v2"></div>
+
+                    </div>
+
+                       <div class="form-group col-md-4">
+
+
+                        <h3>Address</h3>
+                        <p style="text-align:left;size: 30px; color:black;letter-spacing: 3px"><br>
+                            Dewndatagurugewatta
+                            <br>
+                            Weraduwa
+
+                            <br>
+                            Matara
+                            <br>
+                            Sri Lanka
+
+                        </p>
+                        <div class="v3"></div>
+
+                    </div>
+
+                </div>
+                <hr>
+
+            </div>
+
+    </main>
+
+    <!-- page-content" -->
+    </div>
+    <!-- page-wrapper -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+   <script>
+        jQuery(function ($) {
+
+    $(".sidebar-dropdown > a").click(function () {
+        $(".sidebar-submenu").slideUp(200);
+        if ($(this).parent().hasClass("active")) {
+            $(".sidebar-dropdown").removeClass("active");
+            $(this).parent().removeClass("active");
+        } else {
+            $(".sidebar-dropdown").removeClass("active");
+            $(this).next(".sidebar-submenu").slideDown(200);
+            $(this).parent().addClass("active");
+        }
+
+    });
+
+    $("#toggle-sidebar").click(function () {
+        $(".page-wrapper").toggleClass("toggled");
+    });
+
+
+});
+
+
+
+    </script>
+<script>
+
+            function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#avt')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+
+   </script>
+
+</body>
+
+</html>
