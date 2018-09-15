@@ -13,7 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
           content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    <title>Hash's Pet Home</title>
+    <title>Hash's Pet Home:: View Message</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
@@ -200,7 +200,7 @@
 
 
 
-                    <h1>Your Pet List</h1>
+                    <h1>Your Messages</h1>
                     <br>
 
                 </div>
@@ -209,52 +209,33 @@
 
             <!------------------------------->
 
-            {% for cat in session['cat'] %}
-                <div class="row" style="background: #ccffcc">
-                    <div class="form-group col-md-4">
-                        <img src="{{ url_for('static',filename='petpics/'+cat[10]) }}" width="80%"
-                             height="40%">
+            {% for cat in session['mat'] %}
+                <div class="row bg-dark text-white " style="border-radius: 25px" >
+
+                    <div class="form-group col-sm-2">
+                        <h6>From:&ensp;</h6>
+                        <h4> {{ cat[1] }} </h4> <br>
+                         <h6>Date:&ensp;</h6>
 
                     </div>
-                    <div class="form-group col-md-2">
-                        <h6>Owner Name&ensp;</h6>
-                        <h4> {{ cat[2] }} </h4> <br>
-                        <h6>Pet's Name &ensp;&ensp; </h6>
+                    <div class="form-group col-sm-8">
+
+
+                    </div>
+                    <div class="form-group col-sm-2 ">
+                        <br>
+                        <img src="{{ url_for('static',filename='images/mail.png') }}" width="100px" height="100px">
+
+
+                    </div>
+
+                    <div class="form-group col-sm-8">
+                        <h6>Message&ensp;</h6>
                         <h4> {{ cat[3] }}</h4> <br>
-                        <h6>Breed &ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp; </h6>
-                        <h4> {{ cat[4] }}</h4>
-
-
-
 
 
                     </div>
-                    <div class="form-group col-md-3">
-                        <h6>Type&ensp;</h6>
-                        <h4> {{ cat[5] }}</h4> <br>
-                        <h6>Color &ensp;&ensp; </h6>
-                        <h4> {{ cat[6] }}</h4> <br>
-                        <h6>Gender&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp; </h6>
-                        <h4> {{ cat[7] }}</h4>
 
-
-
-
-
-                    </div>
-                    <div class="form-group col-md-3">
-                        <h6>Age(Months)&ensp;</h6>
-                        <h4>   {{ cat[8] }}</h4> <br>
-                        <h6>Date of Birth &ensp;&ensp; </h6>
-                        <h4> {{ cat[9] }}</h4> <br>
-                        <h6>Pet ID&ensp;&ensp; </h6>
-                        <h4 style="color: #900C3F"> {{ cat[0] }}</h4> <br>
-
-
-
-
-
-                    </div>
 
 
                 </div>

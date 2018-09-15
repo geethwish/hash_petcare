@@ -20,7 +20,59 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ url_for('static',filename='images/icons/1.ico') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dash.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/del.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+
+
+
+    <script type=text/javascript>
+
+$(document).ready(function(){
+    $("form").submit(function(){
+        alert("Submitted");
+         var toid = $("#id").val();
+         alert(toid)
+       $.ajax({
+            url: '/delconf',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+
+    });
+});
+
+
+$(document).ready(function(){
+    $("#send").onclick(function(event) {
+        event.preventDefault();
+        var toid = $("#id").val();
+
+
+        $.ajax({
+            type: "POST",
+            url: "/delconf",
+            data: "toid=" ,
+            success: function(){alert('success');}
+        });
+    });
+});
+</script>
+
+
+
+
+
+
+
     <style>
 
         p {
@@ -72,9 +124,10 @@
 </head>
 
 <body>
+<form action="/delconf/" method="post" enctype="multipart/form-data">
 
 <div class="page-wrapper chiller-theme toggled">
-    <nav id="sidebar" class="sidebar-wrapper">
+   <nav id="sidebar" class="sidebar-wrapper">
             <div class="sidebar-content">
                 <div id="toggle-sidebar">
                     <div></div>
@@ -200,20 +253,47 @@
 
 
 
-                    <h1>Your Pet List</h1>
+                    <h1>Delete Pet Details</h1>
                     <br>
+                <br>
+                <br>
+                <hr>
 
                 </div>
+
+                <div class="form-group col-md-3"></div>
+            <div class="form-group col-md-5">
+                <select id="inputState" class="form-control input100" name="petid" required value="{{request.form.petid}}">
+                    <option selected> Select Pet ID</option>
+
+            {% for pet in session['tempid'] %}
+                            <option>{{ pet[0] }}</option>
+                             {% endfor %}
+
+
+                </select>
+            <p> &ensp; select the pet id you want to delete</p>
             </div>
+            <div class="form-group col-md-3">
+                <div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							Delete
+						</button>
+					</div>
+
+            </div>
+
+            </div>
+
 
 
             <!------------------------------->
 
             {% for cat in session['cat'] %}
-                <div class="row" style="background: #ccffcc">
+                <div class="row" style="background: #ccffcc; padding: 10px" >
                     <div class="form-group col-md-4">
-                        <img src="{{ url_for('static',filename='petpics/'+cat[10]) }}" width="80%"
-                             height="40%">
+                        <img src="{{ url_for('static',filename='petpics/'+cat[10]) }}" width="60%"
+                             height="35%">
 
                     </div>
                     <div class="form-group col-md-2">
@@ -225,7 +305,7 @@
                         <h4> {{ cat[4] }}</h4>
 
 
-
+                        </h6>
 
 
                     </div>
@@ -238,26 +318,27 @@
                         <h4> {{ cat[7] }}</h4>
 
 
-
+                        </h6>
 
 
                     </div>
+
                     <div class="form-group col-md-3">
                         <h6>Age(Months)&ensp;</h6>
                         <h4>   {{ cat[8] }}</h4> <br>
                         <h6>Date of Birth &ensp;&ensp; </h6>
                         <h4> {{ cat[9] }}</h4> <br>
                         <h6>Pet ID&ensp;&ensp; </h6>
-                        <h4 style="color: #900C3F"> {{ cat[0] }}</h4> <br>
-
-
-
+                       <h4> <input style="height: 50px; width: 40%;background: #ccffcc;" type="text" id="id" name="id" placeholder="Fur Color" required value="{{ cat[0] }}" disabled> </h4><br>
 
 
                     </div>
 
 
+
+
                 </div>
+
                 <br>
             {% endfor %}
 
@@ -406,6 +487,8 @@
 
 </script>
 
+
+</form>
 </body>
 
 </html>

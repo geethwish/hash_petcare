@@ -13,12 +13,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
     <title>Hash's Pet Home</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{url_for('static',filename='images/icons/1.ico')}}"/>
     <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/dash.css')}}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/bootstrap/css/bootstrap.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='fonts/font-awesome-4.7.0/css/font-awesome.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/animate/animate.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/css-hamburgers/hamburgers.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/animsition/css/animsition.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/select2/select2.min.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/daterangepicker/daterangepicker.css')}}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/regpet.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+  <!------------------------------------- date-------------------->
+    <link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+
+  <link rel="stylesheet" href="{{url_for('static',filename='dist/material-datetime-picker.css')}}">
     <style>
 
         p {
@@ -108,7 +132,7 @@
 
                         </li>
                         <li class="sidebar-dropdown">
-                            <a href="#">
+                            <a href="/update/">
                                 <i class="fa fa-edit"></i>
                                 <span>Update Pets Details</span>
 
@@ -116,7 +140,7 @@
 
                         </li>
                         <li class="sidebar-dropdown">
-                            <a href="#">
+                            <a href="/delpet/">
                                 <i class="fa fa-trash"></i>
                                 <span>Delete Pets Details</span>
                             </a>
@@ -129,22 +153,40 @@
                             </a>
 
                         </li>
-                        <li class="sidebar-dropdown">
+                        <li class="sidebar-dropdown ">
                             <a href="#">
                                 <i class="fa fa-user"></i>
                                 <span>Chnage Profile</span>
                             </a>
+          <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="/propic/">Change Profile Pic
+                                            <span class="badge badge-pill badge-success">Img</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/changepw/">Change Password</a>
+                                    </li>
 
-                        </li>
+                                </ul>
+                            </div>
+          </ul>
+
+
+
+
+
 
                     </ul>
+
                 </div>
                 <!-- sidebar-menu  -->
             </div>
             <!-- sidebar-content  -->
             <div class="sidebar-footer">
 
-                <a href="#">
+                <a href="/viewmsg/">
                     <i class="fa fa-envelope"></i>
                     <span class="badge badge-pill badge-success notification">{{ session['messages']}}</span>
                 </a>

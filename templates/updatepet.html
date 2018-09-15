@@ -92,6 +92,7 @@
     }
 
   </style>
+    <script src="{{ url_for('static', filename='js/form.js') }}"></script>
 <!----------------------------------------------------------------------->
 
 
@@ -143,6 +144,22 @@
     margin-left: -3px;
     top: 0;
 }
+         table {
+    font-size: 22px;
+    font-family: arial, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+td, th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 5px;
+}
+
+tr:nth-child(even) {
+    background-color: #34ce57;
+}
 
 
     </style>
@@ -153,7 +170,7 @@
 <body>
 
    <div class="page-wrapper chiller-theme toggled">
-        <nav id="sidebar" class="sidebar-wrapper">
+       <nav id="sidebar" class="sidebar-wrapper">
             <div class="sidebar-content">
                 <div id="toggle-sidebar">
                     <div></div>
@@ -275,16 +292,71 @@
                                         {% endfor %}
                                     {% endif %}
                                 {% endwith %}
+<hr>
+<div class="col-sm-2">
+
+        </div>
+                <div class="col-sm-7">
+     <table border="0" cellpadding="5" cellspacing="5" id="tbl" >
+
+    <tr >
+
+    <th>PET ID</th>
+    <th>PET'S NAME</th>
+    <th>BREED</th>
+     <th>TYPE</th>
+     <th>FUR COLOR</th>
+    <th>GENDER</th>
+    <th>AGE</th>
+     <th>BDAY</th>
+    <th>Image</th>
+
+    </tr>
+    {% for uppet in session['uppet'] %}
+        <tr >
+
+
+            <td >{{ uppet[0]}}</td>
+            <td >{{ uppet[3]}}</td>
+            <td >{{ uppet[4]}}</td>
+            <td >{{ uppet[5]}}</td>
+            <td >{{ uppet[6]}}</td>
+            <td >{{ uppet[7]}}</td>
+            <td >{{ uppet[8]}}</td>
+            <td >{{ uppet[9]}}</td>
+            <td > <img src="{{ url_for('static',filename='petpics/'+uppet[10]) }}" width="100px"
+                             height="100px"></td>
+
+
+        </tr>
+    {% endfor %}
+</table>
+
+        </div>
+                <hr>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                <br>
+                 <br>
+                <br>
+
+
+<hr>
 
                 <div class="container-login100">
                 <div class="wrap-login100">
 
 
 
-                    <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" action="/petregister/" method="post"enctype="multipart/form-data">
+                    <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" action="/updateconfirm/" method="post"enctype="multipart/form-data">
 					<span class="login100-form-title">
-						Register Your Pet
+						Edit Pet's Profile
 					</span>
+
 
 					<div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Your Pet's Name">
 						<input class="input100" type="text" name="petname" placeholder="pet's Name" required value="{{request.form.petname}}">
@@ -314,7 +386,7 @@
                     <div class="wrap-input100 validate-input m-b-16" data-validate="Please Select Pet's Age">
                     <select id="inputState" class="form-control input100" name="age" required value="{{request.form.age}}">
         <option selected>
-            Age</option>
+            Age(Months)</option>
          <option >0.5</option>
         <option>1</option>
         <option>2</option>
@@ -341,6 +413,17 @@
         <option>23</option>
         <option>24</option>
         <option>25</option>
+        <option>26</option>
+        <option>27</option>
+        <option>28</option>
+        <option>29</option>
+        <option>30</option>
+        <option>31</option>
+
+        <option>32</option>
+        <option>33</option>
+        <option>34</option>
+        <option>35</option>
         </select>
                      </div>
                     <div class="wrap-input100 validate-input m-b-16" data-validate="Please enter Your Birth day">
@@ -362,7 +445,7 @@
 
 					<div class="container-login100-form-btn">
 						<button class="login100-form-btn">
-							Register
+							Save Changes
 						</button>
 					</div>
 

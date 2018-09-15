@@ -9,7 +9,7 @@ from pymysql import escape_string as thawrt
 import gc
 from PIL import Image
 import base64
-
+import json
 import PIL.Image
 
 # UPLOAD_FOLDER = 'static/userpics'
@@ -305,29 +305,268 @@ def view():
         (thawrt(owneremail),))
 
     data = c.fetchall()
-    c.execute(
-        "SELECT COUNT(*) FROM `pets` WHERE `ownerEmail`=%s",
-        (thawrt(owneremail),))
-    count=c.fetchone()[0]
 
-    print(data)
     session['cat'] = data
-    for row in data:
-        session['tempownername'] = row[2]
-        session['temppetname'] = row[3]
-        session['breed'] = row[4]
-        session['type'] = row[5]
-        session['color'] = row[6]
-        session['gender'] = row[7]
-        session['age'] = row[8]
-        session['dob'] = row[9]
-        session['image'] = row[10]
-
-        print(count)
-
 
     return render_template("View.html")
 
 
+@app.route('/update/')
+def update():
+    owneremail = session['uemail']
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `pets` WHERE `ownerEmail`=%s",
+        (thawrt(owneremail),))
+
+    petsid = c.fetchall()
+
+    session['tempid'] = petsid
+
+    return render_template("updatefront.html")
+
+
+@app.route('/updateauth/')
+def updateauth():
+    return render_template("updatepet.html")
+
+
+@app.route('/delpet/')
+def delpet():
+    owneremail = session['uemail']
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `pets` WHERE `ownerEmail`=%s",
+        (thawrt(owneremail),))
+
+    data = c.fetchall()
+
+    session['cat'] = data
+    return render_template("deletepet.html")
+
+
+@app.route('/delconf/', methods=['POST'])
+def delconf():
+    if request.method == 'POST':
+        petidfordelete = request.form['petid']
+
+        c, cnx = connection()
+        c.execute(
+            "DELETE FROM `pets` WHERE `petID`=%s",
+            (thawrt(petidfordelete),))
+        cnx.commit()
+        flash("Record has been Successfully deleted..!")
+
+    return redirect(url_for("delpet"))
+
+
+@app.route('/startupdate/', methods=['POST'])
+def startupdate():
+    try:
+        if request.method == "POST":
+            updatepetid = request.form['petid']
+
+            if updatepetid == 'Select Pet ID':
+                flash("Please Select a Valid Pet ID")
+                return redirect(url_for("update"))
+            else:
+                c, cnx = connection()
+                c.execute(
+                    "SELECT * FROM `pets` WHERE `petID`=%s",
+                    (thawrt(updatepetid),))
+
+                data = c.fetchall()
+
+                session['uppet'] = data
+                session['oids'] = updatepetid
+
+                print(updatepetid)
+                return redirect(url_for("updateauth"))
+        else:
+            flash("Please Select a Valid Pet ID")
+            return redirect(url_for("update"))
+
+    except Exception as e:
+        print(e)
+        return redirect(url_for("update"))
+
+
+@app.route('/updateconfirm/', methods=['POST'])
+def updateconfirm():
+    try:
+        if request.method == "POST":
+            petname = request.form['petname']
+            pettype = request.form['type']
+
+            petbreed = request.form['Bread']
+
+            petcolor = request.form['color']
+
+            petgender = request.form['gender']
+
+            petage = request.form['age']
+
+            petbday = request.form['dob']
+            image = request.files.getlist("pic")
+            target = os.path.join(APP_ROOT, 'static/petpics')
+            capname = now.strftime("%Y-%m-%d %H-%M")
+
+            updateid = session['oids']
+
+            if petgender == "Gender" or petgender == None:
+                flash("Please Select Pet Gender...")
+
+            if petage == "Age" or petage == None:
+                flash("Please Select Pet Age...")
+
+            if image == []:
+                flash("please selct a image")
+
+            else:
+                if not os.path.isdir(target):
+                    os.mkdir(target)
+
+                for file in request.files.getlist("pic"):
+                    # print(file)
+                    filename = file.filename
+                    # print(filename)
+                    destination = "/".join([target, filename])
+                    # print(destination)
+
+                    file.save(destination)
+                    newfile = 'static/petpics/' + capname + filename
+                    newfilename = capname + filename
+                    os.rename(destination, newfile)
+                    # flash("Sucess")
+                    c, cnx = connection()
+                    print(updateid)
+                    c.execute(
+                        "UPDATE `pets` SET `petsname`=%s,`Breed`=%s,`type`=%s,`furColor`=%s,`gender`=%s,`Age`=%s,`dob`=%s,`image`=%s WHERE `petID`=%s",
+                        (thawrt(petname), thawrt(petbreed), thawrt(pettype), thawrt(petcolor), thawrt(petgender),
+                         thawrt(petage), thawrt(petbday), thawrt(newfilename), thawrt(updateid)))
+                    cnx.commit()
+                    flash("Registration successful..!")
+
+                    cnx.close
+                    c.close()
+                    return redirect(url_for("view"))
+
+
+    except Exception as e:
+        print(e)
+        flash("Update were not succesfull...")
+        os.remove(newfile)
+        return redirect(url_for("update"))
+
+
+@app.route('/propic/')
+def propic():
+    print(session['profic'])
+
+    return render_template("changeprofilet.html")
+
+
+@app.route('/cp/', methods=['POST'])
+def cp():
+    try:
+        if request.method == "POST":
+            image = request.files.getlist("pic")
+            target = os.path.join(APP_ROOT, 'static/petpics')
+            capname = now.strftime("%Y-%m-%d %H-%M")
+            email = session['uemail']
+
+            if image == []:
+                flash("please selct a image")
+
+            else:
+                if not os.path.isdir(target):
+                    os.mkdir(target)
+
+                for file in request.files.getlist("pic"):
+                    print(file)
+                    filename = file.filename
+                    print(filename)
+                    destination = "/".join([target, filename])
+                    # print(destination)
+
+                    file.save(destination)
+                    newfile = 'static/userpics/' + capname + filename
+                    newfilename = capname + filename
+                    os.rename(destination, newfile)
+                    # flash("Sucess")
+                    c, cnx = connection()
+                    # print(email)
+                    c.execute("UPDATE `customers` SET `image`=%s WHERE `Email`=%s",
+                              (thawrt(newfilename), thawrt(email)))
+                    cnx.commit()
+                    flash("Registration successful..!")
+                    os.remove('static/userpics/' + session['profic'])
+
+                    session['profic'] = newfilename
+
+                    cnx.close
+                    c.close()
+                    return redirect(url_for("dash"))
+
+
+
+    except Exception as e:
+        print(e)
+        flash("Upload Failed")
+        return redirect(url_for("propic"))
+
+
+@app.route('/changepw/')
+def changepw():
+    return render_template("changepw.html")
+
+
+@app.route('/authpass/', methods=['POST'])
+def authpass():
+    try:
+        if request.method == "POST":
+            password = request.form['pword']
+
+            newpassword = request.form['cpword']
+            Truepassword = sha256_crypt.encrypt((str(newpassword)))
+
+            if sha256_crypt.verify(password, session['userpass']):
+                c, cnx = connection()
+                # print(email)
+                c.execute("UPDATE `customers` SET `password`=%s WHERE `Email`=%s",
+                          (thawrt(Truepassword), thawrt(session['uemail'])))
+                cnx.commit()
+                flash("Password Has changed successfully..!")
+                return redirect(url_for("dash"))
+            else:
+                flash("Current Passowrd is wrong..!")
+
+
+
+
+
+    except Exception as e:
+        print(e)
+    return redirect(url_for("changepw"))
+    flash("Save Failled..")
+
+@app.route('/viewmsg/')
+def viewmsg():
+    owneremail = session['uemail']
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `message` WHERE `REmail`=%s ORDER BY `MessageId` DESC LIMIT 25",
+        (thawrt(owneremail),))
+
+    data = c.fetchall()
+
+    session['mat'] = data
+    return render_template("Viewmsg.html")
+
+
+
+
+
 if __name__ == '__main__':
+    app.debug = True
     app.run()
