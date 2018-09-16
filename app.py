@@ -1,5 +1,10 @@
 import datetime
 import io
+import smtplib
+from email import encoders
+from email.mime.base import MIMEBase
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 from flask import Flask, render_template, flash, request, url_for, redirect, session, Response, jsonify
 from passlib.hash import sha256_crypt
@@ -585,6 +590,7 @@ def adloginauth():
             lastname = request.form['lname']
 
             usermobile = request.form['mobile']
+            sts = "normal"
 
             userrole = request.form['role']
             userpass1 = request.form['pass']
@@ -628,13 +634,13 @@ def adloginauth():
                             newfile = 'static/staff/' + capname + filename
                             newfilename = capname + filename
                             os.rename(destination, newfile)
-                            #flash("Sucess")
+                            # flash("Sucess")
 
                     c.execute(
-                        "INSERT INTO `admin`( `email`, `FirstName`, `LastName`, `Role`, `Mobile`, `pic`, `password`) VALUES (%s,%s,%s,%s,%s,%s,%s)",
+                        "INSERT INTO `admin`( `email`, `FirstName`, `LastName`, `Role`, `Mobile`, `pic`,`status`, `password`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
                         (
                             thawrt(usermail), thawrt(firstname), thawrt(lastname), thawrt(userrole),
-                            thawrt(usermobile), thawrt(newfilename),
+                            thawrt(usermobile), thawrt(newfilename), thawrt(sts),
                             thawrt(Truepassword)))
                     cnx.commit()
                     flash("Registration successful..!")
@@ -691,7 +697,7 @@ def adminlogincheck():
                 mypic = row[6]
                 sts = row[7]
                 passw = row[8]
-                print(fname)
+                print(sts)
 
             if sha256_crypt.verify(request.form['pass'], passw):
                 print(request.form['pass'])
@@ -704,7 +710,6 @@ def adminlogincheck():
                 session['mypic'] = mypic
                 session['sts'] = sts
                 session['passwordmy'] = passw
-
 
                 flash("you are now Logged in...!")
                 return redirect(url_for('admindash'))
@@ -729,6 +734,215 @@ def admindash():
 @app.route('/reguser/')
 def reguser():
     return render_template("newaccount.html")
+
+
+@app.route('/changeadp/')
+def changeadp():
+    return render_template("changeadminpassword.html")
+
+
+@app.route('/changemypass/', methods=['POST'])
+def changemypass():
+    try:
+        if request.method == "POST":
+            password = request.form['pword']
+
+            newpassword = request.form['cpword']
+            Truepassword = sha256_crypt.encrypt((str(newpassword)))
+
+            if sha256_crypt.verify(password, session['passwordmy']):
+                c, cnx = connection()
+                # print(email)
+                c.execute("UPDATE `admin` SET `password`=%s WHERE `email`=%s",
+                          (thawrt(Truepassword), thawrt(session['uemail'])))
+                cnx.commit()
+                flash("Password Has changed successfully..!")
+                return redirect(url_for("admindash"))
+            else:
+                flash("Current Passowrd is wrong..!")
+
+
+
+
+
+    except Exception as e:
+        print(e)
+    return redirect(url_for("changeadp"))
+    flash("Save Failled..")
+
+
+@app.route('/deluserad/')
+def deluserad():
+    sts = "normal"
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `admin` WHERE `status`=%s",
+        (thawrt(sts),))
+
+    data = c.fetchall()
+    print(data)
+
+    session['users'] = data
+    return render_template("deluserad.html")
+
+
+@app.route('/deladconf/', methods=['POST'])
+def deladconf():
+    if request.method == 'POST':
+        userid = request.form['uid']
+
+        if userid == "Select User ID":
+            flash("Please Select User ID")
+        else:
+
+            c, cnx = connection()
+            c.execute(
+                "DELETE FROM `admin` WHERE`id`=%s",
+                (thawrt(userid),))
+            cnx.commit()
+            flash("Record has been Successfully deleted..!")
+
+    return redirect(url_for("deluserad"))
+
+
+@app.route('/searchpet/')
+def searchpet():
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `pets` ")
+
+    data = c.fetchall()
+
+    session['allpet'] = data
+
+    print(data)
+
+    return render_template("searchpet.html")
+
+
+@app.route('/searchnow/', methods=['POST'])
+def searchnow():
+    if request.method == 'POST':
+        so = request.form['optradio']
+        search = request.form['search']
+        print(search)
+
+        if so:
+            # usermail
+
+            c, cnx = connection()
+            c.execute(
+                "SELECT * FROM `pets` WHERE `ownerEmail`=%s",
+                (thawrt(search),))
+
+            data = c.fetchall()
+
+            session['allpet'] = data
+
+            return render_template("searchresult.html")
+        else:
+            # petid
+            c, cnx = connection()
+            c.execute(
+                "SELECT * FROM `pets` WHERE `petID`=%s",
+                (thawrt(search),))
+
+            data = c.fetchall()
+
+            session['allpet'] = data
+
+            return render_template("searchresult.html")
+
+    return redirect(url_for("searchpet"))
+
+
+# ----------------------------------------------send message---------------------------------------
+
+@app.route('/sendmessage/')
+def sendmessage():
+    return render_template("sendnewmessage.html")
+
+
+@app.route('/authsendmsg/', methods=['POST'])
+def authsendmsg():
+    if request.method == 'POST':
+        toname = request.form['name']
+        toemail = request.form['email']
+        petid = request.form['petid']
+        petname = request.form['petname']
+        today = request.form['date']
+        message = request.form['message']
+        frommail = session['uemail']
+        sts = "unread"
+
+        c, cnx = connection()
+        c.execute(
+            "INSERT INTO `message`( `FromMail`, `REmail`, `Message`, `Status`, `date`, `petid`, `petname`, `OwnerName`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
+            (
+                thawrt(frommail), thawrt(toemail), thawrt(message), thawrt(sts),
+                thawrt(today), thawrt(petid), thawrt(petname),
+                thawrt(toname)))
+        cnx.commit()
+        flash("Mesage Sent!")
+
+        smtp_ssl_host = 'smtp.gmail.com'  # smtp.mail.yahoo.com
+        smtp_ssl_port = 465
+        username = "hashspetcare1@gmail.com"
+        password = "Hashpet@2018"
+        sender = "hashspetcare1@gmail.com"
+        targets = ["hashspetcare1@gmail.com", toemail]
+
+        msg = MIMEText("Hi Mr. " + toname + "." + "about your pet " + petname + "." + message)
+        msg['Subject'] = 'Pet Alert'
+        msg['From'] = sender
+        msg['To'] = ', '.join(targets)
+
+        server = smtplib.SMTP_SSL(smtp_ssl_host, smtp_ssl_port)
+        server.login(username, password)
+        server.sendmail(sender, targets, msg.as_string())
+        server.quit()
+
+        cnx.close
+        c.close()
+
+        gc.collect()
+
+        print(toname, toemail, today, petid, petname, message)
+
+        return redirect(url_for("admindash"))
+
+
+@app.route('/addevents/')
+def addevents():
+    return render_template("events.html")
+
+
+@app.route('/addevt/', methods=['POST'])
+def addevt():
+    if request.method == 'POST':
+        evtname = request.form['name']
+        evtdate = request.form['edate']
+        evttime = request.form['etime']
+        evtdes = request.form['ta1']
+        evtven = request.form['v']
+        sts = "open"
+
+        c, cnx = connection()
+        c.execute(
+            "INSERT INTO `events`( `eventname`, `eventdate`, `eventtime`, `eventdes`, `venue`, `status`) VALUES (%s,%s,%s,%s,%s,%s)",
+            (
+                thawrt(evtname), thawrt(evtdate),
+                thawrt(evttime), thawrt(evtdes), thawrt(evtven),
+                thawrt(sts)))
+        cnx.commit()
+        flash("New Event Added")
+
+        cnx.close
+        c.close()
+
+        gc.collect()
+
+        return redirect(url_for("admindash"))
 
 
 if __name__ == '__main__':

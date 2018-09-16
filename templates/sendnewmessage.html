@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    <title>Hash's Pet Care::Home:Admin's Home</title>
+    <title>Hash's Pet Care:::Send New Message</title>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -32,8 +32,8 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/daterangepicker/daterangepicker.css')}}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/util.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='admin/css/regpet.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='admin/css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='admin/css/main2.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
@@ -103,13 +103,13 @@
                 </div>
                 <div class="sidebar-header">
                     <div class="user-pic">
-                       <img class="img-responsive img-rounded" src="{{url_for('static',filename='staff/'+ session['mypic'])}}"  alt="User picture">
+                        <img class="img-responsive img-rounded" src="{{url_for('static',filename='staff/'+ session['mypic'])}}"  alt="User picture">
                     </div>
                     <div class="user-info">
                         <span class="user-name">{{ session['firstname']}}
                             <strong>{{ session['lastname']}}</strong>
                         </span>
-                        <span class="user-role">{{ session['myrole']}}</span>
+                        <span class="user-role">User</span>
                         <span class="user-status">
                             <i class="fa fa-circle"></i>
                             <span>Online</span>
@@ -121,7 +121,7 @@
                 <div class="sidebar-menu">
                     <ul>
                         <li class="header-menu">
-                            <span>Admin Panel</span>
+                            <span>General</span>
                         </li>
                         <li class="sidebar-dropdown">
                             <a href="#">
@@ -137,57 +137,19 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/changeadp/">Change Passowrd</a>
+                                        <a href="/#/">Delete Accounts</a>
                                     </li>
-                                     {% if session['sts']=="SUPER" %}
-                                         <li >
-                                        <a href="/deluserad/">Delete Accounts</a>
-                                    </li>
-
-
-        {% else %}
-
-         {% endif %}
-
-
-
-
 
                                 </ul>
                             </div>
 
                         </li>
                         <li class="sidebar-dropdown">
-                            <a >
+                            <a href="/update/">
                                 <i class="fa fa-edit"></i>
-                                <span>Pet Care Zone</span>
+                                <span>Update Pets Details</span>
 
                             </a>
-                            <div class="sidebar-submenu">
-                                <ul>
-                                    <li>
-                                        <a href="/searchpet/">Search Pets
-
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/sendmessage/">Send Messages</a>
-                                    </li>
-                                     <li>
-                                        <a href="/addevents/">Add Event</a>
-                                    </li>
-                                     <li>
-                                        <a href="/deletemed/">Delete Events</a>
-                                    </li>
-
-
-
-
-
-
-
-                                </ul>
-                            </div>
 
                         </li>
                         <li class="sidebar-dropdown">
@@ -248,8 +210,11 @@
             </div>
         </nav>
 
-
         <!-- sidebar-wrapper  -->
+
+
+
+
         <main class="page-content">
             <div class="container-fluid">
                 <div class="row">
@@ -266,31 +231,75 @@
                                         {% endfor %}
                                     {% endif %}
                                 {% endwith %}
-                        <h1>Your Appoinments</h1>
-                        <br>
 
-                    <div class="col-md-5">
-                            <select id="inputState" name="gender" class="form-control input100" required value="{{request.form.gender}}">
-                            <option selected>Appointment ID</option>
-                            <option>!</option>
-                            <option>!</option>
-                          </select>
-					</div>
-                    <br>
-                    <div class="col-md-3">
-                        <div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Done
-						</button>
-					</div>
-
-
-                        </div>
                     </div>
 
                 </div>
+            <h1>Create New User Account </h1>
+                <hr>
+        <div class="row">
+        <div class="col-md-8">
+            <div class="well well-sm">
+                <form method="post" action="/authsendmsg/">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">
+                                Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="Enter name" required="required" value="{{request.form.name}}" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">
+                                Email Address</label>
+                            <div class="input-group">
+                                <span class="input-group-addon"><span class="glyphicon glyphicon-envelope"></span>
+                                </span>
+                                <input type="email" class="form-control" name="email" placeholder="Enter email" required="required" value="{{request.form.email}}" /></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="form-group">
+                            <label for="Pet Name">
+                                Pet Name</label>
+                            <input type="text" class="form-control" name="petname" placeholder="Enter pet name" required="required" value="{{request.form.petname}}" />
+                        </div>
+                        </div>
 
-              <hr>
+                         <div class="form-group">
+                            <div class="form-group">
+                            <label for="Pet ID">
+                                Pet ID</label>
+                            <input type="text" class="form-control" name="petid" placeholder="Enter pet ID" required="required" value="{{request.form.petid}}" />
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">
+                                Message</label>
+                            <textarea name="message" id="message" class="form-control" rows="9" cols="25" required="required"
+                                placeholder="Message"></textarea>
+                        </div>
+                         <div class="form-group">
+                            <div class="form-group">
+                            <label for="Date">
+                                Date</label>
+                            <input type="text" class="form-control" name="date" placeholder="Enter Date(Year/Month/Day)" required="required" value="{{request.form.date}}"/>
+                        </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <button type="submit" class="btn btn-primary pull-right" id="btnContactUs">
+                            Send Message</button>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+                <hr>
                    <div class="row">
                     <div class="form-group col-md-4">
 
@@ -396,6 +405,26 @@
 
 
     </script>
+<script>
+
+            function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#avt')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+
+   </script>
 
 </body>
 

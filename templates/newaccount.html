@@ -103,7 +103,7 @@
                 </div>
                 <div class="sidebar-header">
                     <div class="user-pic">
-                       <img class="img-responsive img-rounded" src=""  alt="User picture">
+                        <img class="img-responsive img-rounded" src="{{url_for('static',filename='staff/'+ session['mypic'])}}"  alt="User picture">
                     </div>
                     <div class="user-info">
                         <span class="user-name">{{ session['firstname']}}
