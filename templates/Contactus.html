@@ -158,18 +158,18 @@
 				<img src="{{url_for('static',filename='images/icons/symbol-01.png')}}" alt="SYMBOL-MAIL">
 			</span>
 
-			<form class="contact100-form validate-form flex-sb flex-w">
+			<form class="contact100-form validate-form flex-sb flex-w" action="/conta/" method="post" enctype="multipart/form-data">
 				<span class="contact100-form-title">
 					Drop Us A Message
 				</span>
 
-				<div class="wrap-input100 rs1 validate-input" data-validate = "Name is required">
-					<input class="input100" type="text" name="name" placeholder="Name">
+				<div class="wrap-input100 rs1 validate-input" data-validate = "Name is required" >
+					<input class="input100" type="text" name="name" placeholder="Name" value="{{request.form.name}}">
 					<span class="focus-input100"></span>
 				</div>
 
 				<div class="wrap-input100 rs1 validate-input" data-validate = "Email is required: e@a.z">
-					<input class="input100" type="text" name="email" placeholder="Email Address">
+					<input class="input100" type="text" name="email" placeholder="Email Address" {{request.form.email}}>
 					<span class="focus-input100"></span>
 				</div>
 

@@ -1,5 +1,6 @@
 import datetime
 import io
+import re
 import smtplib
 from email import encoders
 from email.mime.base import MIMEBase
@@ -571,6 +572,200 @@ def viewmsg():
     return render_template("Viewmsg.html")
 
 
+# -------------------------------------------------New Ap------------------------------------------------
+
+@app.route('/cna/')
+def cna():
+    c, cnx = connection()
+    c.execute(
+        "SELECT `email` FROM `admin` WHERE `Role`='Doctor'")
+
+    data = c.fetchall()
+    print(data)
+
+    session['docemail'] = data
+    c, cnx = connection()
+    c.execute(
+        "SELECT `petID` FROM `pets` WHERE`ownerEmail`=%s", (thawrt(session['uemail']),))
+
+    data1 = c.fetchall()
+    session['petid'] = data1
+    return render_template("ap.html")
+
+
+# --------------------------------add Epoinment  Function------------------------------------
+
+@app.route('/apauth/', methods=['POST'])
+def apauth():
+    if request.method == 'POST':
+        reason = request.form['name']
+        docmail = request.form['docid']
+        petid = request.form['petid']
+        petname = request.form['petname']
+        today = request.form['date']
+        message = request.form['message']
+        frommail = session['uemail']
+        sts = "on"
+
+        c, cnx = connection()
+        c.execute(
+            "INSERT INTO `appointment`( `AppointmentReason`, `PetID`, `Petname`, `Doctor Mail`, `message`, `status`, `from`, `date`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)",
+            (
+                thawrt(reason), thawrt(petid), thawrt(petname), thawrt(docmail),
+                thawrt(message), thawrt(sts), thawrt(frommail),
+                thawrt(today)))
+        cnx.commit()
+        flash("New Appointment Created!")
+
+        cnx.close
+        c.close()
+
+        gc.collect()
+
+        return redirect(url_for("dash"))
+
+    # ------------------------------------------------Manage Appoinments-------------------------------
+
+
+@app.route('/ma/')
+def ma():
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `appointment` WHERE `from`=%s and `status`='on'", (thawrt(session['uemail']),))
+
+    data = c.fetchall()
+    print(data)
+
+    session['ap'] = data
+
+    return render_template("Apoinmentmng.html")
+
+
+# ------------------------------------Mange Apoinment functions--------------------------
+@app.route('/apmng/', methods=['POST'])
+def apmng():
+    c, cnx = connection()
+    c.execute(
+        "SELECT `email` FROM `admin` WHERE `Role`='Doctor'")
+
+    data = c.fetchall()
+    print(data)
+
+    session['docemail'] = data
+    c, cnx = connection()
+    c.execute(
+        "SELECT `petID` FROM `pets` WHERE`ownerEmail`=%s", (thawrt(session['uemail']),))
+
+    data1 = c.fetchall()
+    session['petid'] = data1
+    if request.method == 'POST':
+        apid = request.form['evtid']
+        session['apidss'] = apid
+        c, cnx = connection()
+        c.execute(
+            "SELECT * FROM `appointment` WHERE  `AppointmentID`=%s", (thawrt(apid),))
+
+        data = c.fetchall()
+        print(data)
+
+        session['ap'] = data
+        for row in data:
+            session['apr'] = row[1]
+            session['appetid'] = row[2]
+            session['appetname'] = row[3]
+            session['apdoc'] = row[4]
+            session['apmsg'] = row[5]
+            session['apdate'] = row[8]
+
+    return render_template("apm.html")
+
+
+@app.route('/apmauth/', methods=['POST'])
+def apmauth():
+    if request.method == 'POST':
+        reason = request.form['name']
+        docmail = request.form['docid']
+        petid = request.form['petid']
+        petname = request.form['petname']
+        today = request.form['date']
+        message = request.form['message']
+        if request.form['submit'] == 'btn1':
+            c, cnx = connection()
+            # print(email)
+            c.execute(
+                "UPDATE `appointment` SET `AppointmentReason`=%s,`PetID`=%s,`Petname`=%s,`Doctor Mail`=%s,`message`=%s,`date`=%s WHERE `from`=%s",
+                (thawrt(reason), thawrt(petid), thawrt(petname), thawrt(docmail), thawrt(message), thawrt(today),
+                 thawrt(session['uemail'])))
+            cnx.commit()
+            flash("Appointment Updated..!")
+            return redirect(url_for("dash"))
+
+        # -----------------------------------------------------------------Cancel Appoinment-----------------------
+
+        if request.form['submit'] == 'btn2':
+            c, cnx = connection()
+            stss = "Canceled "
+            # print(email)
+            c.execute(
+                "UPDATE `appointment` SET `status`=%s WHERE `AppointmentID`=%s",
+                (thawrt(stss), thawrt(session['apidss']),))
+            cnx.commit()
+            flash("Appointment Canceled..!")
+            return redirect(url_for("dash"))
+
+    return redirect(url_for("apmng"))
+
+
+# -----------------------------------------------Send Mail direct-----------------------------------------------------
+@app.route('/sendm/')
+def sendm():
+    return render_template("sendusermail.html")
+
+
+@app.route('/sendmfunc/', methods=['POST'])
+def sendmfunc():
+    if request.method == 'POST':
+        frommail = session['uemail']
+        subject = request.form['name']
+        tomail = request.form['email']
+        msg = request.form['message']
+        dnt = now.strftime("%Y-%m-%d %H-%M -%p")
+        stss = "unread"
+        # print(subject,tomail,msg)
+        c, cnx = connection()
+        c.execute(
+            "INSERT INTO `toadmin`( `frommail`, `tomail`, `message`, `status`, `dateandtime`,`subject`) VALUES  (%s,%s,%s,%s,%s,%s)",
+            (
+                thawrt(frommail), thawrt(tomail), thawrt(msg), thawrt(stss),
+                thawrt(dnt), thawrt(subject)))
+        cnx.commit()
+        flash("Message Sent!")
+
+        cnx.close
+        c.close()
+
+        gc.collect()
+
+        return redirect(url_for("dash"))
+
+
+# -------------------------------user out box-----------------------------------------------------------------------
+@app.route('/uob/')
+def uob():
+    frommail = session['uemail']
+
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `toadmin` WHERE `frommail`=%s ORDER BY `mid` DESC LIMIT 1000 ", (thawrt(frommail),))
+
+    data = c.fetchall()
+
+    session['uobs'] = data
+
+    print(data)
+    return render_template("userobox.html")
+
+
 # ----------------------------------------------------Admin Section-------------------------------------------------
 
 @app.route('/admin/')
@@ -728,6 +923,15 @@ def adminlogincheck():
 
 @app.route('/admindash/')
 def admindash():
+    c, cnx = connection()
+    c.execute("SELECT * FROM `appointment` WHERE `status`='on'")
+
+    data = c.fetchall()
+    print(data)
+    for row in data:
+        session['apoinID'] = row[0]
+
+    session['appoin'] = data
     return render_template("Admindashboard.html")
 
 
@@ -943,6 +1147,286 @@ def addevt():
         gc.collect()
 
         return redirect(url_for("admindash"))
+
+
+# ----------------------------------------------------------------------------------------------------
+
+@app.route('/mngevt/')
+def mngevt():
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `events` WHERE `status`='open' ORDER BY `eventid` DESC LIMIT 100 ")
+
+    data = c.fetchall()
+
+    session['allevt'] = data
+
+    print(data)
+    return render_template("eventsmng.html")
+
+
+# ---------------------------------------------------Manage Event Main page-----------------------------
+@app.route('/selectmng/', methods=['POST'])
+def selectmng():
+    if request.method == 'POST':
+        eventid = request.form['evtid']
+        session['eids'] = eventid
+
+        if eventid == 'Select Event ID':
+            flash("Please Select a Event ID")
+            return redirect(url_for("mngevt"))
+        else:
+            c, cnx = connection()
+            c.execute(
+                "SELECT * FROM `events` WHERE `eventid`=%s",
+                (thawrt(eventid),))
+            data = c.fetchall()
+            for row in data:
+                session['selevtname'] = row[1]
+                session['seldate'] = row[2]
+                session['seltime'] = row[3]
+                session['seldes'] = row[4]
+                session['selv'] = row[5]
+
+            return render_template("Mangeeventsmain.html")
+
+
+@app.route('/mngfunc/', methods=['POST'])
+def mngfunc():
+    if request.method == 'POST':
+
+        if request.form['submit'] == 'btn1':
+            print("1")
+
+            evtname = request.form['name']
+            evtdate = request.form['edate']
+            evttime = request.form['etime']
+            evtdes = request.form['ta1']
+            evtven = request.form['v']
+            c, cnx = connection()
+            # print(email)
+            c.execute(
+                "UPDATE `events` SET `eventname`=%s,`eventdate`=%s,`eventtime`=%s,`eventdes`=%s,`venue`=%s WHERE `eventid`=%s",
+                (thawrt(evtname), thawrt(evtdate), thawrt(evttime), thawrt(evtdes), thawrt(evtven),
+                 thawrt(session['eids'])))
+            cnx.commit()
+            flash("Event Updated..!")
+            return redirect(url_for("admindash"))
+        # --------------------------------------Update event-------------------------------
+
+        if request.form['submit'] == 'btn2':
+            print("2")
+            c, cnx = connection()
+            c.execute(
+                "DELETE FROM `events` WHERE `eventid`=%s",
+                (thawrt(session['eids']),))
+            cnx.commit()
+            flash("Record has been Successfully deleted..!")
+            return redirect(url_for("admindash"))
+
+        # ---------------------------------Delete Event----------------------------------------
+
+        if request.form['submit'] == 'btn3':
+            print("3")
+            de = "done"
+            c, cnx = connection()
+            # print(email)
+            c.execute(
+                "UPDATE `events` SET `status`=%s WHERE `eventid`=%s",
+                (thawrt(de), thawrt(session['eids'])))
+            cnx.commit()
+            flash("Good Job..!")
+            return redirect(url_for("admindash"))
+        # ---------------------------------------------Event Done----------------------------------
+
+        return redirect(url_for("admindash"))
+
+
+# --------------------------------------------------view all events---------------------------
+@app.route('/vae/')
+def vae():
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `events` ORDER BY `eventid` DESC LIMIT 1000")
+
+    data = c.fetchall()
+
+    session['allevt'] = data
+
+    print(data)
+    return render_template("allevt.html")
+
+
+# --------------------------------------------------View Current EVEnts---------------
+@app.route('/vce/')
+def vce():
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `events` WHERE `status`='open' ORDER BY `eventid` DESC LIMIT 1000")
+
+    data = c.fetchall()
+
+    session['allevt'] = data
+
+    print(data)
+    return render_template("vce.html")
+
+
+# -----------------------------------View Done Events--------------------------------------
+@app.route('/vde/')
+def vde():
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `events` WHERE `status`='done' ORDER BY `eventid` DESC LIMIT 1000")
+
+    data = c.fetchall()
+
+    session['allevt'] = data
+
+    print(data)
+    return render_template("vde.html")
+
+
+# -------------------------------------outboc-------------------------------------------
+
+@app.route('/obox/')
+def obox():
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `message` WHERE `FromMail`=%s ORDER BY `MessageId` DESC LIMIT 1000",
+        (thawrt(session['uemail']),))
+
+    data = c.fetchall()
+
+    session['allevt'] = data
+
+    print(data)
+    return render_template("obox.html")
+
+
+# --------------------------------------------------make done appoinment-------------------------
+@app.route('/donejob/', methods=['POST'])
+def donejob():
+    if request.method == 'POST':
+        eventid = request.form['evtid']
+        print(eventid)
+        c, cnx = connection()
+        status = "done"
+        # print(email)
+        c.execute(
+            "UPDATE `appointment` SET `status`=%s WHERE `AppointmentID`=%s",
+            (thawrt(status), thawrt(eventid)))
+        cnx.commit()
+        flash("Done..!")
+        return redirect(url_for("admindash"))
+
+    return redirect(url_for("admindash"))
+
+
+# ---------------------------------------------view all appoinment--------------------
+@app.route('/vaa/')
+def vaa():
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `appointment`  ORDER BY `AppointmentID` DESC LIMIT 1000")
+
+    data = c.fetchall()
+
+    session['allapi'] = data
+
+    print(data)
+    return render_template("Viewallappoinment.html")
+
+
+# --------------------------------------view canceled-----------------------------------
+
+@app.route('/vca/')
+def vca():
+    c, cnx = connection()
+    c.execute(
+        "SELECT * FROM `appointment` where `status`='Canceled' ORDER BY `AppointmentID` DESC LIMIT 1000")
+
+    data = c.fetchall()
+
+    session['canapp'] = data
+
+    print(data)
+    return render_template("viewcancelappoinment.html")
+
+
+# -------------------------------recived Messages-------------------------------------------------------------
+
+@app.route('/mymsg/')
+def mymsg():
+    c, cnx = connection()
+    c.execute("SELECT * FROM `toadmin` WHERE `status`='unread'")
+
+    data = c.fetchall()
+    print(data)
+
+    session['mymsgs'] = data
+
+    return render_template("recivedmsg.html")
+
+
+@app.route('/mymsgfunc/', methods=['POST'])
+def mymsgfunc():
+    if request.method == 'POST':
+        msgid = request.form['msgid']
+        print(msgid)
+        c, cnx = connection()
+        status = "Readed"
+        # print(email)
+        c.execute(
+            "UPDATE `toadmin` SET `status`=%s WHERE `mid`=%s",
+            (thawrt(status), thawrt(msgid)))
+        cnx.commit()
+        flash("Done..!")
+        return redirect(url_for("admindash"))
+
+    return redirect(url_for("admindash"))
+
+
+@app.route('/allmymsg/')
+def allmymsg():
+    c, cnx = connection()
+    c.execute("SELECT * FROM `toadmin` ORDER BY `mid` DESC LIMIT 1000 ")
+
+    data = c.fetchall()
+    print(data)
+
+    session['allmymsgs'] = data
+
+    return render_template("allrecivedmsg.html")
+
+
+@app.route('/conta/', methods=['POST'])
+def conta():
+    email = request.form['email']
+    name = request.form['name']
+    mess = request.form['message']
+
+    smtp_ssl_host = 'smtp.gmail.com'  # smtp.mail.yahoo.com
+    smtp_ssl_port = 465
+    username = "hashspetcare1@gmail.com"
+    password = "Hashpet@2018"
+    sender = "hashspetcare1@gmail.com"
+    targets = ["hashspetcare1@gmail.com", email]
+
+    msg = MIMEText(
+        "Hi Mr. " + name + "." + "thank you for mailing us. we will reply soon for your following message." + mess)
+    msg['Subject'] = 'Pet Alert'
+    msg['From'] = sender
+    msg['To'] = ', '.join(targets)
+
+    server = smtplib.SMTP_SSL(smtp_ssl_host, smtp_ssl_port)
+    server.login(username, password)
+    server.sendmail(sender, targets, msg.as_string())
+    server.quit()
+
+    gc.collect()
+
+    return redirect(url_for("umain"))
 
 
 if __name__ == '__main__':

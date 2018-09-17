@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    <title>Hash's Pet Home</title>
+    <title>Hash's Pet Care:Manage Events</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -178,7 +178,7 @@ tr:nth-child(even) {
                     <div></div>
                 </div>
                 <div class="sidebar-brand">
-                    <a href="#">Hash's Pet Care</a>
+                    <a href="/dashboard/">Hash's Pet Care</a>
                 </div>
                 <div class="sidebar-header">
                     <div class="user-pic">
@@ -249,7 +249,36 @@ tr:nth-child(even) {
                                     </li>
 
                                 </ul>
+
                             </div>
+                        </li>
+                        <li class="sidebar-dropdown ">
+                            <a href="#">
+                                <i class="fa fa-user"></i>
+                                <span>Appointments</span>
+                            </a>
+          <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="/cna/">Create New Appointment
+                                            <span class="badge badge-pill badge-success">New</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/ma/">Manage Appointments</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                    </li>
+                        <li class="sidebar-dropdown">
+                            <a href="/sendm/">
+                                <i class="fal fa-envelope-open"></i>
+                                <span>Send Mail</span>
+
+                            </a>
+
+                        </li>
           </ul>
 
 
@@ -268,6 +297,10 @@ tr:nth-child(even) {
                 <a href="/viewmsg/">
                     <i class="fa fa-envelope"></i>
                     <span class="badge badge-pill badge-success notification">{{ session['messages']}}</span>
+                </a>
+                <a href="/uob/">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge badge-pill badge-success notification">OutBox</span>
                 </a>
 
                 <a href="/logout/">

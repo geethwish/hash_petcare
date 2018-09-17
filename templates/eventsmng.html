@@ -13,14 +13,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description"
           content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    <title>Hash's Pet Home:: View Message</title>
+    <title>Hash's Pet Update</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
           crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <link rel="icon" type="image/png" href="{{ url_for('static',filename='images/icons/1.ico') }}"/>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='css/dash.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/del.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+
+
     <style>
 
         p {
@@ -36,7 +41,7 @@
         h3 {
             text-align: left;
             text-transform: uppercase;
-            color: #8e2800;
+            color: #e0e0e0;
         }
 
         .vl {
@@ -72,9 +77,10 @@
 </head>
 
 <body>
+<form action="/selectmng/" method="post" enctype="multipart/form-data">
 
 <div class="page-wrapper chiller-theme toggled">
-<nav id="sidebar" class="sidebar-wrapper">
+         <nav id="sidebar" class="sidebar-wrapper">
             <div class="sidebar-content">
                 <div id="toggle-sidebar">
                     <div></div>
@@ -82,17 +88,17 @@
                     <div></div>
                 </div>
                 <div class="sidebar-brand">
-                    <a href="/dashboard/">Hash's Pet Care</a>
+                    <a href="/admindash/">Hash's Pet Care</a>
                 </div>
                 <div class="sidebar-header">
                     <div class="user-pic">
-                        <img class="img-responsive img-rounded" src="{{url_for('static',filename='userpics/'+session['profic'])}}"  alt="User picture">
+                       <img class="img-responsive img-rounded" src="{{url_for('static',filename='staff/'+ session['mypic'])}}"  alt="User picture">
                     </div>
                     <div class="user-info">
                         <span class="user-name">{{ session['firstname']}}
                             <strong>{{ session['lastname']}}</strong>
                         </span>
-                        <span class="user-role">User</span>
+                        <span class="user-role">{{ session['myrole']}}</span>
                         <span class="user-status">
                             <i class="fa fa-circle"></i>
                             <span>Online</span>
@@ -104,85 +110,123 @@
                 <div class="sidebar-menu">
                     <ul>
                         <li class="header-menu">
-                            <span>General</span>
+                            <span>Admin Panel</span>
                         </li>
                         <li class="sidebar-dropdown">
-                            <a href="/regpet/">
-                                <i class="fa fa-registered"></i>
-                                <span>Register Pet</span>
+                            <a href="#">
+                                <i class="fas fa-users"></i>
+                                <span>User Accounts</span>
                                 <span class="badge badge-pill badge-danger">New</span>
                             </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="/reguser/">Create New Account
+
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/changeadp/">Change Passowrd</a>
+                                    </li>
+                                     {% if session['sts']=="SUPER" %}
+                                         <li >
+                                        <a href="/deluserad/">Delete Accounts</a>
+                                    </li>
+
+
+        {% else %}
+
+         {% endif %}
+
+
+
+
+
+                                </ul>
+                            </div>
 
                         </li>
                         <li class="sidebar-dropdown">
-                            <a href="/update/">
-                                <i class="fa fa-edit"></i>
-                                <span>Update Pets Details</span>
+                            <a >
+                               <i class="fas fa-paw"></i>
+                                <span>Pet Care Zone</span>
 
                             </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="/searchpet/">Search Pets
+
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/sendmessage/">Send Messages</a>
+                                    </li>
+                                     <li>
+                                        <a href="/addevents/">Add Event</a>
+                                    </li>
+                                     <li>
+                                        <a href="/mngevt/">Manage Events</a>
+                                    </li>
+
+
+
+
+
+
+
+                                </ul>
+                            </div>
 
                         </li>
-                        <li class="sidebar-dropdown">
-                            <a href="/delpet/">
-                                <i class="fa fa-trash"></i>
-                                <span>Delete Pets Details</span>
-                            </a>
 
-                        </li>
                         <li class="sidebar-dropdown">
-                            <a href="/view/">
+                            <a >
                                 <i class="fa fa-eye"></i>
-                                <span>View Pet Details</span>
+                                <span>View Zone</span>
                             </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="/vce/">View Current Events
+
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/vae/">View All Events</a>
+                                    </li>
+                                    <li>
+                                        <a href="/vde/">View Done Events</a>
+                                    </li>
+                                    <li>
+                                        <a href="/vaa/">All Appointment </a>
+                                    </li>
+                                    <li>
+                                        <a href="/vca/">Canceled Appointment </a>
+                                    </li>
+
+
+
+                                </ul>
+                            </div>
 
                         </li>
+
                         <li class="sidebar-dropdown ">
                             <a href="#">
-                                <i class="fa fa-user"></i>
-                                <span>Chnage Profile</span>
+                                <i class="far fa-comments"></i>
+                                <span>Message Zone</span>
                             </a>
           <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a href="/propic/">Change Profile Pic
-                                            <span class="badge badge-pill badge-success">Img</span>
+                                        <a href="/obox/">Outbox
+                                            <span class="badge badge-pill badge-success">All</span>
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a href="/changepw/">Change Password</a>
-                                    </li>
-
-                                </ul>
-
-                            </div>
-                        </li>
-                        <li class="sidebar-dropdown ">
-                            <a href="#">
-                                <i class="fa fa-user"></i>
-                                <span>Appointments</span>
-                            </a>
-          <div class="sidebar-submenu">
-                                <ul>
-                                    <li>
-                                        <a href="/cna/">Create New Appointment
-                                            <span class="badge badge-pill badge-success">New</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="/ma/">Manage Appointments</a>
                                     </li>
 
                                 </ul>
                             </div>
-                    </li>
-                        <li class="sidebar-dropdown">
-                            <a href="/sendm/">
-                                <i class="fal fa-envelope-open"></i>
-                                <span>Send Mail</span>
-
-                            </a>
-
-                        </li>
           </ul>
 
 
@@ -198,13 +242,13 @@
             <!-- sidebar-content  -->
             <div class="sidebar-footer">
 
-                <a href="/viewmsg/">
+                <a href="/mymsg/">
                     <i class="fa fa-envelope"></i>
-                    <span class="badge badge-pill badge-success notification">{{ session['messages']}}</span>
+                    <span class="badge badge-pill badge-success notification">New</span>
                 </a>
-                <a href="/uob/">
+                 <a href="/allmymsg/">
                     <i class="fa fa-envelope"></i>
-                    <span class="badge badge-pill badge-success notification">OutBox</span>
+                    <span class="badge badge-pill badge-success notification">All</span>
                 </a>
 
                 <a href="/logout/">
@@ -212,6 +256,7 @@
                 </a>
             </div>
         </nav>
+
 
     <!-- sidebar-wrapper  -->
     <main class="page-content">
@@ -233,45 +278,78 @@
 
 
 
-                    <h1>Your Messages</h1>
+                    <h1>Manage Event Details</h1>
                     <br>
+                <br>
+                <br>
+                <hr>
 
                 </div>
+
+                <div class="form-group col-md-3"></div>
+            <div class="form-group col-md-5">
+                <select id="inputState" class="form-control input100" name="evtid" required value="{{request.form.evtid}}">
+                    <option selected> Select Event ID</option>
+
+            {% for evt in session['allevt'] %}
+                            <option>{{ evt[0] }}</option>
+                             {% endfor %}
+
+
+                </select>
+            <p> &ensp; select the Event  id you want to Manage</p>
             </div>
+            <div class="form-group col-md-3">
+                <div class="container-login100-form-btn">
+						<button class="login100-form-btn">
+							NEXT
+						</button>
+					</div>
+
+            </div>
+
+            </div>
+
 
 
             <!------------------------------->
 
-            {% for cat in session['mat'] %}
-                <div class="row bg-dark text-white " style="border-radius: 25px" >
+            {% for evt in session['allevt'] %}
+                <div  style="padding: 10px;border-radius: 25px" class="row bg-dark text-white " >
 
-                    <div class="form-group col-sm-2">
-                        <h6>From:&ensp;</h6>
-                        <h4> {{ cat[1] }} </h4> <br>
-                         <h6>Date:&ensp;</h6>
+                    <div class="form-group col-md-4" >
+                        <h5>Event&ensp;</h5>
+                        <h3> {{ evt[1] }} </h3> <br>
+                        <h5>Event Date &ensp;&ensp; </h5>
+                        <h3> {{ evt[2] }}</h3> <br>
+                        <h5>Event Duration&ensp;&ensp;&ensp; &ensp;&ensp; </h5>
+                        <h3> {{ evt[3] }}</h3>
 
-                    </div>
-                    <div class="form-group col-sm-8">
 
-
-                    </div>
-                    <div class="form-group col-sm-2 ">
-                        <br>
-                        <img src="{{ url_for('static',filename='images/mail.png') }}" width="100px" height="100px">
+                        </h6>
 
 
                     </div>
+                    <div class="form-group col-md-8">
+                        <h5>Event Description</h5>
+                        <h3> {{ evt[4] }}</h3> <br>
+                        <h5>Venue &ensp;&ensp; </h5>
+                        <h3> {{ evt[5] }}</h3> <br>
+                        <h5>Event ID&ensp;&ensp;&ensp;&ensp;&ensp; &ensp;&ensp; </h5>
+                        <h3> {{ evt[0] }}</h3>
 
-                    <div class="form-group col-sm-8">
-                        <h6>Message&ensp;</h6>
-                        <h4> {{ cat[3] }}</h4> <br>
+
+                        </h6>
 
 
                     </div>
+
+
 
 
 
                 </div>
+
                 <br>
             {% endfor %}
 
@@ -347,41 +425,7 @@
             <hr>
 
         </div>
-        <div id="demo" class="carousel slide" data-ride="carousel">
 
-            <!-- Indicators -->
-            <ul class="carousel-indicators">
-                <li data-target="#demo" data-slide-to="0" class="active"></li>
-                <li data-target="#demo" data-slide-to="1"></li>
-                <li data-target="#demo" data-slide-to="2"></li>
-                <li data-target="#demo" data-slide-to="3"></li>
-            </ul>
-
-            <!-- The slideshow -->
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{{ url_for('static',filename='images/show/logo.png') }}" alt="Hash's Pets care">
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ url_for('static',filename='images/show/1.jpg') }}" alt="Chicago">
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ url_for('static',filename='images/show/2.jpg') }}" alt="New York">
-                </div>
-                <div class="carousel-item">
-                    <img src="{{ url_for('static',filename='images/show/3.jpg') }}" alt="New York">
-                </div>
-            </div>
-
-            <!-- Left and right controls -->
-            <a class="carousel-control-prev" href="#demo" data-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </a>
-            <a class="carousel-control-next" href="#demo" data-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </a>
-
-        </div>
     </main>
 
     <!-- page-content" -->
@@ -420,6 +464,8 @@
 
 </script>
 
+
+</form>
 </body>
 
 </html>

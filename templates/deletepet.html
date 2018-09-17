@@ -135,7 +135,7 @@ $(document).ready(function(){
                     <div></div>
                 </div>
                 <div class="sidebar-brand">
-                    <a href="#">Hash's Pet Care</a>
+                    <a href="/dashboard/">Hash's Pet Care</a>
                 </div>
                 <div class="sidebar-header">
                     <div class="user-pic">
@@ -206,7 +206,36 @@ $(document).ready(function(){
                                     </li>
 
                                 </ul>
+
                             </div>
+                        </li>
+                        <li class="sidebar-dropdown ">
+                            <a href="#">
+                                <i class="fa fa-user"></i>
+                                <span>Appointments</span>
+                            </a>
+          <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="/cna/">Create New Appointment
+                                            <span class="badge badge-pill badge-success">New</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/ma/">Manage Appointments</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                    </li>
+                        <li class="sidebar-dropdown">
+                            <a href="/sendm/">
+                                <i class="fal fa-envelope-open"></i>
+                                <span>Send Mail</span>
+
+                            </a>
+
+                        </li>
           </ul>
 
 
@@ -225,6 +254,10 @@ $(document).ready(function(){
                 <a href="/viewmsg/">
                     <i class="fa fa-envelope"></i>
                     <span class="badge badge-pill badge-success notification">{{ session['messages']}}</span>
+                </a>
+                <a href="/uob/">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge badge-pill badge-success notification">OutBox</span>
                 </a>
 
                 <a href="/logout/">
@@ -266,7 +299,7 @@ $(document).ready(function(){
                 <select id="inputState" class="form-control input100" name="petid" required value="{{request.form.petid}}">
                     <option selected> Select Pet ID</option>
 
-            {% for pet in session['tempid'] %}
+            {% for pet in session['cat'] %}
                             <option>{{ pet[0] }}</option>
                              {% endfor %}
 

@@ -82,6 +82,11 @@
     margin-left: -3px;
     top: 0;
 }
+          h4 {
+    text-align: left;
+    text-transform: uppercase;
+    color: #e4b9b9;
+}
 
     </style>
 
@@ -89,7 +94,7 @@
 </head>
 
 <body>
-
+<form action="/donejob/" method="post" enctype="multipart/form-data">
     <div class="page-wrapper chiller-theme toggled">
         <nav id="sidebar" class="sidebar-wrapper">
             <div class="sidebar-content">
@@ -125,7 +130,7 @@
                         </li>
                         <li class="sidebar-dropdown">
                             <a href="#">
-                                <i class="fa fa-registered"></i>
+                                <i class="fas fa-users"></i>
                                 <span>User Accounts</span>
                                 <span class="badge badge-pill badge-danger">New</span>
                             </a>
@@ -159,7 +164,7 @@
                         </li>
                         <li class="sidebar-dropdown">
                             <a >
-                                <i class="fa fa-edit"></i>
+                               <i class="fas fa-paw"></i>
                                 <span>Pet Care Zone</span>
 
                             </a>
@@ -177,7 +182,7 @@
                                         <a href="/addevents/">Add Event</a>
                                     </li>
                                      <li>
-                                        <a href="/deletemed/">Delete Events</a>
+                                        <a href="/mngevt/">Manage Events</a>
                                     </li>
 
 
@@ -190,34 +195,50 @@
                             </div>
 
                         </li>
-                        <li class="sidebar-dropdown">
-                            <a href="/delpet/">
-                                <i class="fa fa-trash"></i>
-                                <span>Delete Pets Details</span>
-                            </a>
 
-                        </li>
                         <li class="sidebar-dropdown">
-                            <a href="/view/">
+                            <a >
                                 <i class="fa fa-eye"></i>
-                                <span>View Pet Details</span>
+                                <span>View Zone</span>
                             </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="/vce/">View Current Events
+
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/vae/">View All Events</a>
+                                    </li>
+                                    <li>
+                                        <a href="/vde/">View Done Events</a>
+                                    </li>
+                                    <li>
+                                        <a href="/vaa/">All Appointment </a>
+                                    </li>
+                                    <li>
+                                        <a href="/vca/">Canceled Appointment </a>
+                                    </li>
+
+
+
+                                </ul>
+                            </div>
 
                         </li>
+
                         <li class="sidebar-dropdown ">
                             <a href="#">
-                                <i class="fa fa-user"></i>
-                                <span>Chnage Profile</span>
+                                <i class="far fa-comments"></i>
+                                <span>Message Zone</span>
                             </a>
           <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a href="/propic/">Change Profile Pic
-                                            <span class="badge badge-pill badge-success">Img</span>
+                                        <a href="/obox/">Outbox
+                                            <span class="badge badge-pill badge-success">All</span>
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a href="/changepw/">Change Password</a>
                                     </li>
 
                                 </ul>
@@ -237,9 +258,13 @@
             <!-- sidebar-content  -->
             <div class="sidebar-footer">
 
-                <a href="/viewmsg/">
+                <a href="/mymsg/">
                     <i class="fa fa-envelope"></i>
-                    <span class="badge badge-pill badge-success notification">{{ session['messages']}}</span>
+                    <span class="badge badge-pill badge-success notification">New</span>
+                </a>
+                 <a href="/allmymsg/">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge badge-pill badge-success notification">All</span>
                 </a>
 
                 <a href="/logout/">
@@ -270,10 +295,12 @@
                         <br>
 
                     <div class="col-md-5">
-                            <select id="inputState" name="gender" class="form-control input100" required value="{{request.form.gender}}">
+                            <select id="inputState" name="evtid" class="form-control input100" required value="{{request.form.evtid}}">
                             <option selected>Appointment ID</option>
-                            <option>!</option>
-                            <option>!</option>
+                                {% for evt in session['appoin'] %}
+                            <option>{{ evt[0] }}</option>
+                             {% endfor %}
+
                           </select>
 					</div>
                     <br>
@@ -289,6 +316,78 @@
                     </div>
 
                 </div>
+
+
+            {% for evt in session['appoin'] %}
+                <div  style="padding: 10px;border-radius: 25px" class="row bg-dark text-white " >
+
+                    <div class="form-group col-md-6" >
+                        <h5>Appointment Reason&ensp;</h5>
+                        <h4> {{ evt[1] }} </h4> <br>
+                        <h5>From &ensp;&ensp; </h5>
+                        <h4> {{ evt[7] }}</h4> <br>
+                        <h5>To Doctor&ensp;&ensp;&ensp; &ensp;&ensp; </h5>
+                        <h4> {{ evt[4] }}</h4>
+
+
+                        </h6>
+
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <h5>Pet Name</h5>
+
+                        <h4> {{ evt[3] }}</h4> <br>
+                        <h5>Pet ID &ensp;&ensp; </h5>
+                        <h4> {{ evt[2] }}</h4> <br>
+                        <h5>Date&ensp;&ensp;&ensp;&ensp; &ensp;&ensp; </h5>
+                        <h4> {{ evt[8] }}</h4>
+
+
+                    </div>
+
+                 <div class="form-group col-md-8">
+                        <h5>Message</h5>
+                        <h4> {{ evt[5] }}</h4> <br>
+                     <h5>Appointment ID</h5>
+                        <h4> {{ evt[0] }}</h4> <br>
+
+
+
+
+                    </div>
+
+
+
+
+
+                </div>
+
+                <br>
+            {% endfor %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
               <hr>
                    <div class="row">
@@ -396,7 +495,7 @@
 
 
     </script>
-
+</form>
 </body>
 
 </html>

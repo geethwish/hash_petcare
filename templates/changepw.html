@@ -151,7 +151,7 @@
                     <div></div>
                 </div>
                 <div class="sidebar-brand">
-                    <a href="#">Hash's Pet Care</a>
+                    <a href="/dashboard/">Hash's Pet Care</a>
                 </div>
                 <div class="sidebar-header">
                     <div class="user-pic">
@@ -222,7 +222,36 @@
                                     </li>
 
                                 </ul>
+
                             </div>
+                        </li>
+                        <li class="sidebar-dropdown ">
+                            <a href="#">
+                                <i class="fa fa-user"></i>
+                                <span>Appointments</span>
+                            </a>
+          <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="/cna/">Create New Appointment
+                                            <span class="badge badge-pill badge-success">New</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/ma/">Manage Appointments</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                    </li>
+                        <li class="sidebar-dropdown">
+                            <a href="/sendm/">
+                                <i class="fal fa-envelope-open"></i>
+                                <span>Send Mail</span>
+
+                            </a>
+
+                        </li>
           </ul>
 
 
@@ -242,13 +271,16 @@
                     <i class="fa fa-envelope"></i>
                     <span class="badge badge-pill badge-success notification">{{ session['messages']}}</span>
                 </a>
+                <a href="/uob/">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge badge-pill badge-success notification">OutBox</span>
+                </a>
 
                 <a href="/logout/">
                     <i class="fa fa-power-off"></i>
                 </a>
             </div>
         </nav>
-
         <!-- sidebar-wrapper  -->
         <main class="page-content">
             <div class="container-fluid">

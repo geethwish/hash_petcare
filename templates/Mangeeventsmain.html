@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    <title>Hash's Pet Care::Home:Change admin Password</title>
+    <title>Hash's Pet Care:::Manage Events</title>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -32,8 +32,8 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='vendor/daterangepicker/daterangepicker.css')}}">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='css/util.css')}}">
-	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='admin/css/regpet.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='admin/css/util.css')}}">
+	<link rel="stylesheet" type="text/css" href="{{url_for('static',filename='admin/css/main2.css')}}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 
@@ -91,7 +91,7 @@
 <body>
 
     <div class="page-wrapper chiller-theme toggled">
-       <nav id="sidebar" class="sidebar-wrapper">
+        <nav id="sidebar" class="sidebar-wrapper">
             <div class="sidebar-content">
                 <div id="toggle-sidebar">
                     <div></div>
@@ -269,7 +269,12 @@
         </nav>
 
 
+
         <!-- sidebar-wrapper  -->
+
+
+
+
         <main class="page-content">
             <div class="container-fluid">
                 <div class="row">
@@ -287,117 +292,116 @@
                                     {% endif %}
                                 {% endwith %}
 
+                    </div>
+
+                </div>
+            <h1>Manage Event</h1>
+                <hr>
+          <div  style="padding: 10px;border-radius: 25px" class="row bg-dark text-white " >
+        <div class="row">
+        <div class="col-md-8">
+            <div class="well well-sm">
+                <form method="post" action="/mngfunc/">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="name">
+                                Event Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="Enter Event Name" required="required" value="{{session['selevtname']}}" />
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-group">
+                            <label for="Event Date">
+                                Event Date</label>
+                            <input type="text" class="form-control" name="edate" placeholder="Event Date(Y/M/D)" required="required" value="{{session['seldate']}}" />
+                        </div>
+                        </div>
+
+                         <div class="form-group">
+                            <div class="form-group">
+                            <label for="Event Time">
+                                Event Time</label>
+                            <input type="text" class="form-control" name="etime" placeholder="Event Time(h:m:AM/PM)" required="required" value="{{ session['seltime'] }}" />
+                        </div>
                         </div>
                     </div>
-            <div class="container-login100">
-                <div class="wrap-login100">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">
+                                Event Description</label>
+                            <textarea name="ta1"  class="form-control" rows="9" cols="25" required="required"
+                                placeholder="Event Description">{{ session['seldes'] }}</textarea>
+
+
+                         <div class="form-group">
+                            <div class="form-group">
+
+                            <input type="text" class="form-control" name="v" placeholder="Venue" required="required" value="{{session['selv']}}"/>
+                        </div>
+                        </div>
+                    </div>
+                        <div class="col-md-6">
+
+                        </div>
 
 
 
-                    <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" action="/changemypass/" method="post"enctype="multipart/form-data">
-					<span class="login100-form-title">
-						Change Your Passowrd
-					</span>
-
-					<div class="wrap-input100 validate-input" data-validate = "Please enter Current  password">
-						<input class="input100" type="password" name="pword" placeholder="Current Password" required value="{{request.form.pword}}" >
-						<span class="focus-input100"></span>
-					</div>
-    <br>
-                    <div class="wrap-input100 validate-input" data-validate = "Enter New Password">
-						<input class="input100" type="password" name="cpword" placeholder="New Password" required value="{{request.form.cpword}}">
-						<span class="focus-input100"></span>
-					</div>
-                    <br>
-
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Change Password
-						</button>
-					</div>
-                        <br>
-                        <br>
 
 
-				</form>
-                </div>
+
                 </div>
 
 
 
+                        <div class="col-md-2">
+
+                        </div>
+                    <div class="col-md-2">
+
+                        </div>
+
+
+                         <div class="col-md-2">
+                             <button type="submit" name="submit" value="btn1" class="btn btn-primary pull-right" id="btnContactUs" >
+                           <i class="fas fa-plus"></i> Update Event</button>
+                         </div>
+
+                         <div class="col-md-3">
+
+                             <button type="submit" name="submit" value="btn2" class="btn btn-primary pull-right" id="btnContactUs" >
+                           <i class="fas fa-trash-alt"></i> Delete Event</button>
+
+
+                         </div>
+
+                          <div class="col-md-3">
+
+                            <button type="submit" name="submit" value="btn3" class="btn btn-primary pull-right" id="btnContactUs" >
+                           <i class="fas fa-check-circle"></i> Done Event</button>
+
+
+                         </div>
 
 
 
 
 
 
+
+
+
+
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+          </div>
 
                 <hr>
-                   <div class="row">
-                    <div class="form-group col-md-4">
 
-
-                        <h3>Clinic Open</h3>
-                        <p style="text-align:left;size: 30px; color:black;letter-spacing: 3px"><br>
-                            • Monday 8.00Am to 10.00Pm
-                            <br>
-                            • Tuesday 8.00Am to 10.00Pm
-                            <br>
-                            • Wednesday  8.00Am to 8.00Pm
-                            <br>
-                            • Thursday 8.00Am to 10.00Pm
-                            <br>
-                            • Friday 8.00Am to 7.00Pm
-                            <br>
-                            • Saturday  8.00Am to 1.00Pm
-                        </p>
-                        <p style="text-align:left;size: 30px; color:red;letter-spacing: 5px">
-
-                            • Sunday -Closed..!
-
-                        </p>
-                        <div class="vl"></div>
-
-                    </div>
-                       <div class="form-group col-md-4">
-
-
-                        <h3>Appointment hours</h3>
-                        <p style="text-align:left;size: 30px; color:black;letter-spacing: 3px"><br>
-                            • Monday 8.00 Am to 11.00Am
-                            <br>
-                            • Tuesday 8.AM to 2.00 PM
-
-                            <br>
-                            • Thursday 2.00PM to 4.00 Pm
-                            <br>
-                            • Friday 1.00Pm to 6.00 Pm
-
-                        </p>
-                        <div class="v2"></div>
-
-                    </div>
-
-                       <div class="form-group col-md-4">
-
-
-                        <h3>Address</h3>
-                        <p style="text-align:left;size: 30px; color:black;letter-spacing: 3px"><br>
-                            Dewndatagurugewatta
-                            <br>
-                            Weraduwa
-
-                            <br>
-                            Matara
-                            <br>
-                            Sri Lanka
-
-                        </p>
-                        <div class="v3"></div>
-
-                    </div>
-
-                </div>
                 <hr>
 
             </div>
@@ -438,6 +442,26 @@
 
 
     </script>
+<script>
+
+            function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#avt')
+                        .attr('src', e.target.result)
+                        .width(150)
+                        .height(200);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+
+
+   </script>
 
 </body>
 

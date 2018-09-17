@@ -91,7 +91,7 @@
 <body>
 
     <div class="page-wrapper chiller-theme toggled">
-        <nav id="sidebar" class="sidebar-wrapper">
+      <nav id="sidebar" class="sidebar-wrapper">
             <div class="sidebar-content">
                 <div id="toggle-sidebar">
                     <div></div>
@@ -103,13 +103,13 @@
                 </div>
                 <div class="sidebar-header">
                     <div class="user-pic">
-                        <img class="img-responsive img-rounded" src="{{url_for('static',filename='staff/'+ session['mypic'])}}"  alt="User picture">
+                       <img class="img-responsive img-rounded" src="{{url_for('static',filename='staff/'+ session['mypic'])}}"  alt="User picture">
                     </div>
                     <div class="user-info">
                         <span class="user-name">{{ session['firstname']}}
                             <strong>{{ session['lastname']}}</strong>
                         </span>
-                        <span class="user-role">User</span>
+                        <span class="user-role">{{ session['myrole']}}</span>
                         <span class="user-status">
                             <i class="fa fa-circle"></i>
                             <span>Online</span>
@@ -121,11 +121,11 @@
                 <div class="sidebar-menu">
                     <ul>
                         <li class="header-menu">
-                            <span>General</span>
+                            <span>Admin Panel</span>
                         </li>
                         <li class="sidebar-dropdown">
                             <a href="#">
-                                <i class="fa fa-registered"></i>
+                                <i class="fas fa-users"></i>
                                 <span>User Accounts</span>
                                 <span class="badge badge-pill badge-danger">New</span>
                             </a>
@@ -137,49 +137,103 @@
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="/#/">Delete Accounts</a>
+                                        <a href="/changeadp/">Change Passowrd</a>
                                     </li>
+                                     {% if session['sts']=="SUPER" %}
+                                         <li >
+                                        <a href="/deluserad/">Delete Accounts</a>
+                                    </li>
+
+
+        {% else %}
+
+         {% endif %}
+
+
+
+
 
                                 </ul>
                             </div>
 
                         </li>
                         <li class="sidebar-dropdown">
-                            <a href="/update/">
-                                <i class="fa fa-edit"></i>
-                                <span>Update Pets Details</span>
+                            <a >
+                               <i class="fas fa-paw"></i>
+                                <span>Pet Care Zone</span>
 
                             </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="/searchpet/">Search Pets
+
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/sendmessage/">Send Messages</a>
+                                    </li>
+                                     <li>
+                                        <a href="/addevents/">Add Event</a>
+                                    </li>
+                                     <li>
+                                        <a href="/mngevt/">Manage Events</a>
+                                    </li>
+
+
+
+
+
+
+
+                                </ul>
+                            </div>
 
                         </li>
-                        <li class="sidebar-dropdown">
-                            <a href="/delpet/">
-                                <i class="fa fa-trash"></i>
-                                <span>Delete Pets Details</span>
-                            </a>
 
-                        </li>
                         <li class="sidebar-dropdown">
-                            <a href="/view/">
+                            <a >
                                 <i class="fa fa-eye"></i>
-                                <span>View Pet Details</span>
+                                <span>View Zone</span>
                             </a>
+                            <div class="sidebar-submenu">
+                                <ul>
+                                    <li>
+                                        <a href="/vce/">View Current Events
+
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="/vae/">View All Events</a>
+                                    </li>
+                                    <li>
+                                        <a href="/vde/">View Done Events</a>
+                                    </li>
+                                    <li>
+                                        <a href="/vaa/">All Appointment </a>
+                                    </li>
+                                    <li>
+                                        <a href="/vca/">Canceled Appointment </a>
+                                    </li>
+
+
+
+                                </ul>
+                            </div>
 
                         </li>
+
                         <li class="sidebar-dropdown ">
                             <a href="#">
-                                <i class="fa fa-user"></i>
-                                <span>Chnage Profile</span>
+                                <i class="far fa-comments"></i>
+                                <span>Message Zone</span>
                             </a>
           <div class="sidebar-submenu">
                                 <ul>
                                     <li>
-                                        <a href="/propic/">Change Profile Pic
-                                            <span class="badge badge-pill badge-success">Img</span>
+                                        <a href="/obox/">Outbox
+                                            <span class="badge badge-pill badge-success">All</span>
                                         </a>
-                                    </li>
-                                    <li>
-                                        <a href="/changepw/">Change Password</a>
                                     </li>
 
                                 </ul>
@@ -199,9 +253,13 @@
             <!-- sidebar-content  -->
             <div class="sidebar-footer">
 
-                <a href="/viewmsg/">
+                <a href="/mymsg/">
                     <i class="fa fa-envelope"></i>
-                    <span class="badge badge-pill badge-success notification">{{ session['messages']}}</span>
+                    <span class="badge badge-pill badge-success notification">New</span>
+                </a>
+                 <a href="/allmymsg/">
+                    <i class="fa fa-envelope"></i>
+                    <span class="badge badge-pill badge-success notification">All</span>
                 </a>
 
                 <a href="/logout/">

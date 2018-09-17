@@ -12,7 +12,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
-    <title>Hash's Pet Care::Home:Change admin Password</title>
+    <title>Hash's Pet Care::Canceled Appointment</title>
    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
         crossorigin="anonymous">
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -82,6 +82,11 @@
     margin-left: -3px;
     top: 0;
 }
+          h4 {
+    text-align: left;
+    text-transform: uppercase;
+    color: #e4b9b9;
+}
 
     </style>
 
@@ -89,7 +94,7 @@
 </head>
 
 <body>
-
+<form action="/donejob/" method="post" enctype="multipart/form-data">
     <div class="page-wrapper chiller-theme toggled">
        <nav id="sidebar" class="sidebar-wrapper">
             <div class="sidebar-content">
@@ -269,6 +274,7 @@
         </nav>
 
 
+
         <!-- sidebar-wrapper  -->
         <main class="page-content">
             <div class="container-fluid">
@@ -286,44 +292,62 @@
                                         {% endfor %}
                                     {% endif %}
                                 {% endwith %}
+                        <h1>Canceled  Appointment</h1>
+                        <br>
 
-                        </div>
+
                     </div>
-            <div class="container-login100">
-                <div class="wrap-login100">
 
-
-
-                    <form class="login100-form validate-form p-l-55 p-r-55 p-t-178" action="/changemypass/" method="post"enctype="multipart/form-data">
-					<span class="login100-form-title">
-						Change Your Passowrd
-					</span>
-
-					<div class="wrap-input100 validate-input" data-validate = "Please enter Current  password">
-						<input class="input100" type="password" name="pword" placeholder="Current Password" required value="{{request.form.pword}}" >
-						<span class="focus-input100"></span>
-					</div>
-    <br>
-                    <div class="wrap-input100 validate-input" data-validate = "Enter New Password">
-						<input class="input100" type="password" name="cpword" placeholder="New Password" required value="{{request.form.cpword}}">
-						<span class="focus-input100"></span>
-					</div>
-                    <br>
-
-					<div class="container-login100-form-btn">
-						<button class="login100-form-btn">
-							Change Password
-						</button>
-					</div>
-                        <br>
-                        <br>
-
-
-				</form>
-                </div>
                 </div>
 
 
+            {% for evt in session['canapp'] %}
+                <div  style="padding: 10px;border-radius: 25px" class="row bg-dark text-white " >
+
+                    <div class="form-group col-md-6" >
+                        <h5>Appointment Reason&ensp;</h5>
+                        <h4> {{ evt[1] }} </h4> <br>
+                        <h5>From &ensp;&ensp; </h5>
+                        <h4> {{ evt[7] }}</h4> <br>
+                        <h5>To Doctor&ensp;&ensp;&ensp; &ensp;&ensp; </h5>
+                        <h4> {{ evt[4] }}</h4>
+
+
+                        </h6>
+
+
+                    </div>
+                    <div class="form-group col-md-4">
+                        <h5>Pet Name</h5>
+
+                        <h4> {{ evt[3] }}</h4> <br>
+                        <h5>Pet ID &ensp;&ensp; </h5>
+                        <h4> {{ evt[2] }}</h4> <br>
+                        <h5>Date&ensp;&ensp;&ensp;&ensp; &ensp;&ensp; </h5>
+                        <h4> {{ evt[8] }}</h4>
+
+
+                    </div>
+
+                 <div class="form-group col-md-8">
+                        <h5>Message</h5>
+                        <h4> {{ evt[5] }}</h4> <br>
+                     <h5>Appointment ID</h5>
+                        <h4> {{ evt[0] }}</h4> <br>
+
+
+
+
+                    </div>
+
+
+
+
+
+                </div>
+
+                <br>
+            {% endfor %}
 
 
 
@@ -332,7 +356,23 @@
 
 
 
-                <hr>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+              <hr>
                    <div class="row">
                     <div class="form-group col-md-4">
 
@@ -438,7 +478,7 @@
 
 
     </script>
-
+</form>
 </body>
 
 </html>
